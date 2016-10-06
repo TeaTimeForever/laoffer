@@ -1,4 +1,3 @@
-import { Parties } from "../../../both/collections/parties.collection";
 import { UserCollection } from "../../../both/collections/user.collection";
 import { CompanyCollection } from "../../../both/collections/company.collection";
 
