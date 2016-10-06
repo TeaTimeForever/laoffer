@@ -1,4 +1,4 @@
-import { ObjectID } from "meteor/mongo";
+import ObjectID = Mongo.ObjectID;
 
 export interface User {
   _id: ObjectID,
