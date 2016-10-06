@@ -1,5 +1,3 @@
-import { DemoCollection } from '../../../both/collections/demo-collection';
-import { DemoDataObject } from '../../../both/models/demo-data-object';
 import { loadCompanies } from "../fixtures/companies";
 import { loadUsers } from "../fixtures/users";
 
