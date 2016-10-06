@@ -1,5 +1,7 @@
 import { DemoCollection } from '../../../both/collections/demo-collection';
 import { DemoDataObject } from '../../../both/models/demo-data-object';
+import { loadCompanies } from "../fixtures/companies";
+import { loadUsers } from "../fixtures/users";
 
 export class Main {
   start(): void {
@@ -7,21 +9,7 @@ export class Main {
   }
 
   initFakeData(): void {
-    if (DemoCollection.find({}).cursor.count() === 0) {
-      const data: DemoDataObject[] = [{
-        name: 'Dotan',
-        age: 25
-      }, {
-        name: 'Liran',
-        age: 26
-      }, {
-        name: 'Uri',
-        age: 30
-      }];
-      
-      data.forEach((obj: DemoDataObject) => {
-        DemoCollection.insert(obj);
-      });
-    }
+    loadCompanies();
+    loadUsers();
   }
 }

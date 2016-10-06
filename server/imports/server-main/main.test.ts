@@ -1,10 +1,9 @@
 // chai uses as asset library
-import * as chai from 'chai';
-import * as spies from 'chai-spies';
-import StubCollections from 'meteor/hwillson:stub-collections';
-
-import { DemoCollection } from '../../../both/collections/demo-collection';
-import { Main } from './main';
+import * as chai from "chai";
+import * as spies from "chai-spies";
+import StubCollections from "meteor/hwillson:stub-collections";
+import { Main } from "./main";
+import { CompanyCollection } from "../../../both/collections/company.collection";
 
 chai.use(spies);
 
@@ -13,7 +12,7 @@ describe('Server Main', () => {
 
   beforeEach(() => {
     // Creating database mock
-    StubCollections.stub(DemoCollection);
+    StubCollections.stub(CompanyCollection);
 
     // Create instance of main class
     mainInstance = new Main();
@@ -32,9 +31,9 @@ describe('Server Main', () => {
   });
 
   it('Should call insert 3 times when init fake data', () => {
-    DemoCollection.insert = chai.spy();
+    CompanyCollection.insert = chai.spy();
     mainInstance.initFakeData();
 
-    chai.expect(DemoCollection.insert).to.have.been.called.exactly(3);
+    chai.expect(CompanyCollection.insert).to.have.been.called.exactly(5);
   });
 });
