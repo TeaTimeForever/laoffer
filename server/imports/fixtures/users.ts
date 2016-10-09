@@ -1,9 +1,11 @@
+
+import { User } from "../../../both/models/user";
 import { UserCollection } from "../../../both/collections/user.collection";
 import { CompanyCollection } from "../../../both/collections/company.collection";
 
 export function loadUsers() {
   if (UserCollection.find().cursor.count() === 0) {
-    const users = [
+    const rawUsers = [
       {
         "email": "Bernard.Cash@lala.lv",
         "name": "Sonya Hensley"
@@ -46,7 +48,15 @@ export function loadUsers() {
       }
     ];
 
-    CompanyCollection.find({}).cursor.forEach(company => console.log(company));
-    // users.forEach((company) => UserCollection.insert(company));
+    let users: User[] = [];
+    CompanyCollection.find({})
+      .cursor
+      .forEach((c, i) => {
+        let index = i*2;
+        users.push(Object.assign(rawUsers[index], {companyId: c._id}));
+        users.push(Object.assign(rawUsers[index+1], {companyId: c._id}));
+      });
+
+    users.forEach((user) => UserCollection.insert(user));
   }
 }

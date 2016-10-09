@@ -1,16 +1,11 @@
-/// <reference path="../../../typings/modules/chai-spies/index.d.ts" />
-/// <reference path="../../../node_modules/@types/mocha/index.d.ts" />
-/// <reference path="../../../node_modules/@types/chai/index.d.ts" />
-
-/// <reference path="../../../typings/globals/meteor/index.d.ts" />
-
+/// <reference path="../../../typings/index.d.ts" />
 // chai uses as asset library
 import * as chai from "chai";
 import * as spies from "chai-spies";
 import StubCollections from "meteor/hwillson:stub-collections";
-import {} from "meteor-node-stubs";
 import { Main } from "./main";
 import { CompanyCollection } from "../../../both/collections/company.collection";
+import { Offer } from "../../../both/models/offer";
 
 chai.use(spies);
 
