@@ -1,3 +1,8 @@
-/**
- * Created by eq on 06/10/16.
- */
+import { Component } from "@angular/core";
+
+@Component({
+  selector: 'user-profile',
+  template: `<router-outlet></router-outlet>`
+})
+export class UserProfileComponent {
+}
