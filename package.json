@@ -26,10 +26,21 @@
     "angular2-meteor-accounts-ui": "^0.8.0",
     "angular2-meteor-polyfills": "0.1.1",
     "angular2-meteor-tests-polyfills": "0.0.2",
+    "autoprefixer": "^6.3.1",
+    "bcrypt": "^0.8.7",
     "meteor-node-stubs": "0.2.3",
     "meteor-rxjs": "0.3.0",
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "0.6.21"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
+    }
   }
 }
