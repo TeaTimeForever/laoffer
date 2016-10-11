@@ -1,11 +1,9 @@
 import ObjectID = Mongo.ObjectID;
 
-export interface Address {
+export class Address {
   country: string;
   city: string;
   state?: string;
   zip?: string;
-  street?: string;
-  homeNumber?: string;
-  apartmentNumber?: string;
+  street: string;
 }
