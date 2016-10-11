@@ -1,10 +1,7 @@
-
-import { User } from "../../../both/models/user";
-import { UserCollection } from "../../../both/collections/user.collection";
 import { CompanyCollection } from "../../../both/collections/company.collection";
 
 export function loadUsers() {
-  if (UserCollection.find().cursor.count() === 0) {
+  if ( Meteor.users.find().count() === 0 ) {
     const rawUsers = [
       {
         "email": "Bernard.Cash@lala.lv",
@@ -48,15 +45,26 @@ export function loadUsers() {
       }
     ];
 
-    let users: User[] = [];
+    let users = [];
     CompanyCollection.find({})
       .cursor
       .forEach((c, i) => {
-        let index = i*2;
+        let index = i * 2;
         users.push(Object.assign(rawUsers[index], {companyId: c._id}));
-        users.push(Object.assign(rawUsers[index+1], {companyId: c._id}));
+        users.push(Object.assign(rawUsers[index + 1], {companyId: c._id}));
       });
-
-    users.forEach((user) => UserCollection.insert(user));
+    users.forEach((user) => {
+      let id = Accounts.createUser({
+        username: user.email,
+        email: user.email,
+        password: 'qwe'
+      });
+      Meteor.users.update(id, {
+        $set: {
+          companyId: user.companyId,
+          name: user.name
+        }
+      });
+    });
   }
 }
