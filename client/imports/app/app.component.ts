@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app',
   template: `
 <common-header></common-header>
+
 <div class="ui red segment">
     <h1>Hello Angular2-Meteor!</h1>
 </div>

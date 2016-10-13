@@ -8,7 +8,7 @@ export class Point {
   address?: Address;
   phone: string;
 
-  constructor(){
+  constructor() {
     this.companyId = (<any>Meteor.user()).companyId;
   }
 }
