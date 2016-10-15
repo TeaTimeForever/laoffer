@@ -3,6 +3,7 @@ import { Address } from "./address";
 
 export class Point {
   _id?: ObjectID;
+  name: string;
   companyId: ObjectID;
   geoLocation: string;
   address?: Address;
