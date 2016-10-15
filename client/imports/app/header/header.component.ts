@@ -10,5 +10,7 @@ import { Component } from '@angular/core';
 `
 })
 export class HeaderComponent {
-  constructor() {}
+  constructor() {
+    Accounts.onLogin(() => console.log("User successfuly logged in"));
+  }
 }
