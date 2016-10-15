@@ -2,17 +2,19 @@ import { NgModule } from "@angular/core";
 import { UserProfileComponent } from "./user-profile.component";
 import { FormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
-import { PointFormComponent } from "./points-management/point-form/point-form.component";
+import { PointFormComponent } from "./points-views/point-form/point-form.component";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { profileRoutes } from "./user-profile.routes";
 import { InitProfileComponent } from "./init-profile/init-profile.component";
+import { EditablePointComponent } from "./points-views/point-form/editable-point.component";
 
 @NgModule({
   declarations: [
     UserProfileComponent,
     PointFormComponent,
-    InitProfileComponent
+    InitProfileComponent,
+    EditablePointComponent
   ],
   exports: [ UserProfileComponent ],
   imports: [
