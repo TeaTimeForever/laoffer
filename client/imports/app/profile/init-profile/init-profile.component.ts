@@ -10,7 +10,10 @@ import { PointCollection } from "../../../../../both/collections/point.collectio
   selector: 'main-profile-view',
   template: `
     <ul>
-        <li *ngFor="let point of points | async">{{point.name}}</li>
+        <li *ngFor="let point of points | async">
+            {{point.name}}
+            
+        </li>
     </ul>
     <a (click)="goToNewPoint()" href="javascript:void(0)">add new point</a>
     

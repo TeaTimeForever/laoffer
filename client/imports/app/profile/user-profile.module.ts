@@ -8,13 +8,15 @@ import { RouterModule } from "@angular/router";
 import { profileRoutes } from "./user-profile.routes";
 import { InitProfileComponent } from "./init-profile/init-profile.component";
 import { EditablePointComponent } from "./points-views/point-form/editable-point.component";
+import { OfferFormComponent } from "./offer-views/offer-form.component";
 
 @NgModule({
   declarations: [
     UserProfileComponent,
     PointFormComponent,
     InitProfileComponent,
-    EditablePointComponent
+    EditablePointComponent,
+    OfferFormComponent
   ],
   exports: [ UserProfileComponent ],
   imports: [

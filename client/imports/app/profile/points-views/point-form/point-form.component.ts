@@ -23,6 +23,7 @@ import { profileRoutes } from "../../user-profile.routes";
          
     </form>
     <button (click)="addNewPoint()" >add new point</button>
+    <button (click)="goToProfile()" >go back</button>
 `
 })
 export class PointFormComponent implements OnInit {
@@ -46,12 +47,11 @@ export class PointFormComponent implements OnInit {
     } else {
       console.log("POINT ON SUBMIT", this.point);
       PointCollection.insert(this.point);
-      console.log(profileRoutes.moduleRoot.path);
+      this.goToProfile();
     }
   }
 
   goToProfile() {
-    this.router.navigateByUrl("bebe");
-    console.log(profileRoutes.moduleRoot.path);
+    this.router.navigateByUrl(profileRoutes.moduleRoot.path);
   }
 }

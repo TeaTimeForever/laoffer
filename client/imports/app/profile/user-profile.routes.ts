@@ -1,11 +1,12 @@
 import { UserProfileComponent } from "./user-profile.component";
 import { InitProfileComponent } from "./init-profile/init-profile.component";
 import { EditablePointComponent } from "./points-views/point-form/editable-point.component";
+import { OfferFormComponent } from "./offer-views/offer-form.component";
 
 const children = {
   toModuleHome: {path: "", component: InitProfileComponent },
   toNewPoint: {path: "new-point", component: EditablePointComponent },
-  toNewOffer: {path: "new-offer", component: EditablePointComponent }
+  toNewOffer: {path: "new-offer", component: OfferFormComponent }
 };
 
 export var profileRoutes: any = Object.create(children);
