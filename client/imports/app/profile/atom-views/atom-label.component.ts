@@ -3,9 +3,10 @@ import { Atom } from "../../../../../both/models/atom";
 
 @Component({
   selector: 'atom-label',
-  template: `<span style="background-color: beige">
-    {{atom.name}}, {{atom.price}}, {{atom.category}}
-</span>`
+  template: `<div style="background-color: beige; display: inline-block; margin: 2px">
+    {{atom.name}}, {{atom.price}}, {{atom.category}} 
+    <div class="recognizeMe" hidden> {{atom._id}}</div>
+</div>`
 })
 export class AtomLabelComponent {
   @Input()

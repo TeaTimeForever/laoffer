@@ -9,6 +9,9 @@ import { profileRoutes } from "./user-profile.routes";
 import { InitProfileComponent } from "./init-profile/init-profile.component";
 import { EditablePointComponent } from "./points-views/point-form/editable-point.component";
 import { OfferFormComponent } from "./offer-views/offer-form.component";
+import { AtomLabelComponent } from "./atom-views/atom-label.component";
+import { DragulaModule } from "ng2-dragula/ng2-dragula";
+import { MoleculaBuilderComponent } from "./offer-views/molecula-builder.component";
 
 @NgModule({
   declarations: [
@@ -16,14 +19,17 @@ import { OfferFormComponent } from "./offer-views/offer-form.component";
     PointFormComponent,
     InitProfileComponent,
     EditablePointComponent,
-    OfferFormComponent
+    OfferFormComponent,
+    AtomLabelComponent,
+    MoleculaBuilderComponent
   ],
   exports: [ UserProfileComponent ],
   imports: [
     CommonModule,
     FormsModule,
     SharedModule,
-    RouterModule.forChild([profileRoutes.moduleRoot])
+    RouterModule.forChild([profileRoutes.moduleRoot]),
+    DragulaModule
   ]
 })
 export class UserProfileModule {}

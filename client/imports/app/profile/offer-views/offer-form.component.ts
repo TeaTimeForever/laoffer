@@ -4,7 +4,6 @@ import { Subscription } from "rxjs/Subscription";
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
-import { Atom } from "../../../../../both/models/atom";
 
 @Component({
   selector: 'offer-form',
@@ -20,23 +19,14 @@ import { Atom } from "../../../../../both/models/atom";
         </div>
         <div>price: <input type="number" placeholder="1.00"></div>
         <div>when active: <input type="text" placeholder="work days 10 - 16"></div>
-        <div style="background-color: aquamarine; min-height: 100px; min-width: 100px;">
-            <span>molecula</span>
-        
-        </div>
-        
-        
-        <div style="background-color: yellowgreen; min-height: 100px; min-width: 100px;">
-            <span>atoms</span>
-            <atom-label *ngFor="let atom of atoms" [atom]="atom" ]></atom-label>
-        </div>
+        <molecula-builder></molecula-builder>
+        <button (click)="saveOffer()">save</button>
     </form>
 `
 })
 export class OfferFormComponent implements  OnDestroy {
 
   private points: Point[];
-  private atoms: Atom[];
   private pointSubscription: Subscription;
   private selectedPoints: { [key:string]:{point: Point, selected: boolean}; } = {};
 
@@ -54,6 +44,10 @@ export class OfferFormComponent implements  OnDestroy {
 
   select(point, selected) {
     this.selectedPoints[point.name] = {point, selected};
+  }
+
+  saveOffer(){
+
   }
 
 }
