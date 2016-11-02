@@ -4,6 +4,11 @@ import { Subscription } from "rxjs/Subscription";
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
+import { Observable } from "rxjs";
+import { Offer } from "../../../../../both/models/offer";
+import { OfferCollection } from "../../../../../both/collections/offer.collection";
+import { Category } from "../../../../../both/models/category.type";
+import { Atom } from "../../../../../both/models/atom";
 
 @Component({
   selector: 'offer-form',
@@ -17,8 +22,10 @@ import { PointCollection } from "../../../../../both/collections/point.collectio
                    name="selectPoints"
                    (change)="select(point, $event.target.checked)"/>
         </div>
-        <div>price: <input type="number" placeholder="1.00"></div>
-        <div>when active: <input type="text" placeholder="work days 10 - 16"></div>
+        <div>price: 
+            <input [(ngModel)]="price" type="number" placeholder="1.00"></div>
+        <div>when active: 
+            <input [(ngModel)]="whenActive" type="text" placeholder="work days 10 - 16"></div>
         <molecula-builder></molecula-builder>
         <button (click)="saveOffer()">save</button>
     </form>
@@ -26,15 +33,20 @@ import { PointCollection } from "../../../../../both/collections/point.collectio
 })
 export class OfferFormComponent implements  OnDestroy {
 
-  private points: Point[];
+  private points;
+  private whenActive: string;
+  private price: number;
+  private molecula: Array<Atom|Category>;
+
   private pointSubscription: Subscription;
   private selectedPoints: { [key:string]:{point: Point, selected: boolean}; } = {};
+
 
   constructor(){
     this.pointSubscription = MeteorObservable
       .subscribe('company-points', (<UserData>Meteor.user()).companyId)
       .subscribe();
-    this.points = (<Point[]>PointCollection.find({}).zone());
+    this.points = <Point[]>PointCollection.find({}).zone();
     this.selectedPoints = {};
   }
 
@@ -46,8 +58,14 @@ export class OfferFormComponent implements  OnDestroy {
     this.selectedPoints[point.name] = {point, selected};
   }
 
-  saveOffer(){
-
+  saveOffer() {
+    Object.keys(this.selectedPoints)
+          .filter(k => this.selectedPoints[k].selected)
+          .forEach(key => OfferCollection.insert({
+      pointId: this.selectedPoints[key].point._id,
+      whenActive: this.whenActive,
+      price: this.price,
+      molecule: this.molecula,
+    }));
   }
-
 }

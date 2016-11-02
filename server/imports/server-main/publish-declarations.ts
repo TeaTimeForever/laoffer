@@ -1,11 +1,9 @@
 import ObjectID = Mongo.ObjectID;
 import { PointCollection } from "../../../both/collections/point.collection";
-export function publishCollections() {
+import { OfferCollection } from "../../../both/collections/offer.collection";
+import { AtomCollection } from "../../../both/collections/atom.collection";
 
-  Meteor.publish(
-    "company-points",
-    (companyId: ObjectID) => PointCollection.find({companyId: companyId}, {})
-  );
+export function publishCollections() {
 
   Meteor.publish(null, () => {
     return Meteor.users.find({},
@@ -16,4 +14,21 @@ export function publishCollections() {
         emails: 1
     }});
   });
+
+  Meteor.publish (
+    "company-points",
+    (companyId: ObjectID) => PointCollection.find({companyId: companyId}, {})
+  );
+
+  Meteor.publish (
+    "offers",
+    () => OfferCollection.find({})
+  );
+
+  Meteor.publish(
+    "company-atoms",
+    (companyId: ObjectID) => AtomCollection.find({companyId: companyId}, {})
+  );
+
+
 }

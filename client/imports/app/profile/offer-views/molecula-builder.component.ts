@@ -46,6 +46,7 @@ export class MoleculaBuilderComponent implements  OnDestroy {
   initAtoms(){
     this.atoms = [{
       _id: "123",
+      companyId: "jzg3XsqoEdzHSfE4Z",
       price: 1.22,
       tags: ["a", "b"],
       category: "Soup",
@@ -53,6 +54,7 @@ export class MoleculaBuilderComponent implements  OnDestroy {
       description: "mmm, yummy"
     },{
       _id: "456",
+      companyId: "jzg3XsqoEdzHSfE4Z",
       price: 1.25,
       tags: ["c", "b"],
       category: "Drink",
