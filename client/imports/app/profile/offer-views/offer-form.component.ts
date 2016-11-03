@@ -4,8 +4,6 @@ import { Subscription } from "rxjs/Subscription";
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
-import { Observable } from "rxjs";
-import { Offer } from "../../../../../both/models/offer";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
 import { Category } from "../../../../../both/models/category.type";
 import { Atom } from "../../../../../both/models/atom";
