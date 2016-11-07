@@ -12,6 +12,7 @@ import { OfferFormComponent } from "./offer-views/offer-form.component";
 import { AtomLabelComponent } from "./atom-views/atom-label.component";
 import { DragulaModule } from "ng2-dragula/ng2-dragula";
 import { MoleculaBuilderComponent } from "./offer-views/molecula-builder.component";
+import { AtomFormComponent } from "./atom-views/atom-form.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MoleculaBuilderComponent } from "./offer-views/molecula-builder.compone
     EditablePointComponent,
     OfferFormComponent,
     AtomLabelComponent,
-    MoleculaBuilderComponent
+    MoleculaBuilderComponent,
+    AtomFormComponent
   ],
   exports: [ UserProfileComponent ],
   imports: [

@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   template: `
 <div class="ui top yellow attached segment">
     <login-buttons></login-buttons>
-    
 </div>
 `
 })

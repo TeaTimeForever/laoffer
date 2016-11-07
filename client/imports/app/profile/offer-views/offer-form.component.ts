@@ -21,12 +21,19 @@ import { Atom } from "../../../../../both/models/atom";
                    (change)="select(point, $event.target.checked)"/>
         </div>
         <div>price: 
-            <input [(ngModel)]="price" type="number" placeholder="1.00"></div>
+            <input [(ngModel)]="price" 
+                   type="number" 
+                   placeholder="1.00"
+                   name="price"></div>
         <div>when active: 
-            <input [(ngModel)]="whenActive" type="text" placeholder="work days 10 - 16"></div>
+            <input [(ngModel)]="whenActive" 
+                   type="text" 
+                   placeholder="work days 10 - 16"
+                   name="whenActive"></div>
         <molecula-builder></molecula-builder>
         <button (click)="saveOffer()">save</button>
     </form>
+    <atom-form [companyId]="companyId"></atom-form>
 `
 })
 export class OfferFormComponent implements  OnDestroy {
@@ -38,13 +45,15 @@ export class OfferFormComponent implements  OnDestroy {
 
   private pointSubscription: Subscription;
   private selectedPoints: { [key:string]:{point: Point, selected: boolean}; } = {};
+  private companyId;
 
 
   constructor(){
+    this.companyId = (<UserData>Meteor.user()).companyId;
     this.pointSubscription = MeteorObservable
-      .subscribe('company-points', (<UserData>Meteor.user()).companyId)
+      .subscribe("company-points", this.companyId)
       .subscribe();
-    this.points = <Point[]>PointCollection.find({}).zone();
+    this.points = PointCollection.find({}).zone();
     this.selectedPoints = {};
   }
 

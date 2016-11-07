@@ -6,3 +6,11 @@ export type Category =
   "Salad" |
   "Dish" |
   "Soup";
+
+export var categories = [
+  "Drink",
+  "Dessert",
+  "Salad",
+  "Dish",
+  "Soup"
+];

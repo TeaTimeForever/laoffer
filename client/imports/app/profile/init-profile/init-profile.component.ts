@@ -12,13 +12,10 @@ import { PointCollection } from "../../../../../both/collections/point.collectio
     <ul>
         <li *ngFor="let point of points | async">
             {{point.name}}
-            
         </li>
     </ul>
     <a (click)="goToNewPoint()" href="javascript:void(0)">add new point</a>
-    
     <hr>
-    
     <a (click)="goToNewOffer()" href="javascript:void(0)">add new offer</a>
 `
 })
