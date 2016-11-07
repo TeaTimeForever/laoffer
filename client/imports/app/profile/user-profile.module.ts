@@ -11,8 +11,9 @@ import { EditablePointComponent } from "./points-views/point-form/editable-point
 import { OfferFormComponent } from "./offer-views/offer-form.component";
 import { AtomLabelComponent } from "./atom-views/atom-label.component";
 import { DragulaModule } from "ng2-dragula/ng2-dragula";
-import { MoleculaBuilderComponent } from "./offer-views/molecula-builder.component";
+import { MoleculeBuilderComponent } from "./offer-views/molecule-builder.component";
 import { AtomFormComponent } from "./atom-views/atom-form.component";
+import { CategoryLabelComponent } from "./atom-views/category-label.component";
 
 @NgModule({
   declarations: [
@@ -21,9 +22,10 @@ import { AtomFormComponent } from "./atom-views/atom-form.component";
     InitProfileComponent,
     EditablePointComponent,
     OfferFormComponent,
+    MoleculeBuilderComponent,
+    AtomFormComponent,
     AtomLabelComponent,
-    MoleculaBuilderComponent,
-    AtomFormComponent
+    CategoryLabelComponent
   ],
   exports: [ UserProfileComponent ],
   imports: [

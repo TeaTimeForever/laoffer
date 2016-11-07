@@ -26,7 +26,7 @@ export class InitProfileComponent implements OnDestroy {
 
   constructor(private router: Router){
     this.pointSubscription = MeteorObservable
-      .subscribe('company-points', (<UserData>Meteor.user()).companyId)
+      .subscribe("company-points", (<UserData>Meteor.user()).companyId)
       .subscribe();
     this.points = PointCollection.find({}).zone();
   }

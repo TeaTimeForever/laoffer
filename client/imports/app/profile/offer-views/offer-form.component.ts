@@ -30,7 +30,7 @@ import { Atom } from "../../../../../both/models/atom";
                    type="text" 
                    placeholder="work days 10 - 16"
                    name="whenActive"></div>
-        <molecula-builder></molecula-builder>
+        <molecule-builder [molecule]="molecule"></molecule-builder>
         <button (click)="saveOffer()">save</button>
     </form>
     <atom-form [companyId]="companyId"></atom-form>
@@ -41,7 +41,7 @@ export class OfferFormComponent implements  OnDestroy {
   private points;
   private whenActive: string;
   private price: number;
-  private molecula: Array<Atom|Category>;
+  private molecule: Array<Atom|Category>;
 
   private pointSubscription: Subscription;
   private selectedPoints: { [key:string]:{point: Point, selected: boolean}; } = {};
@@ -50,6 +50,7 @@ export class OfferFormComponent implements  OnDestroy {
 
   constructor(){
     this.companyId = (<UserData>Meteor.user()).companyId;
+    this.molecule = [];
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", this.companyId)
       .subscribe();
@@ -72,7 +73,7 @@ export class OfferFormComponent implements  OnDestroy {
       pointId: this.selectedPoints[key].point._id,
       whenActive: this.whenActive,
       price: this.price,
-      molecule: this.molecula,
+      molecule: this.molecule,
     }));
   }
 }
