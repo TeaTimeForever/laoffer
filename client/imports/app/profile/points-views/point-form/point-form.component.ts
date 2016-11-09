@@ -4,6 +4,7 @@ import { Point } from "../../../../../../both/models/point";
 import { Address } from "../../../../../../both/models/address";
 import { PointCollection } from "../../../../../../both/collections/point.collection";
 import { profileRoutes } from "../../user-profile.routes";
+import { MouseEvent } from "angular2-google-maps/core";
 
 @Component({
   selector: 'point-form',
@@ -20,7 +21,23 @@ import { profileRoutes } from "../../user-profile.routes";
                type="text"
                name="name"
                placeholder="name" /><br>
-         
+        <input [(ngModel)]="point.geoLocation.lat"
+               type="number"
+               name="lat"
+               placeholder="lat" />
+        <input [(ngModel)]="point.geoLocation.lng"
+               type="number"
+               name="lng"
+               placeholder="lng" />
+        <sebm-google-map [latitude]="centerLat"
+                         [longitude]="centerLng"
+                         [zoom]="8"
+                         (mapClick)="initPointLocation($event)"
+                         style="width: 500px; height: 500px;">
+            <sebm-google-map-marker *ngIf="point.geoLocation.lat && point.geoLocation.lng"
+                [latitude]="point.geoLocation.lat"
+                [longitude]="point.geoLocation.lng"></sebm-google-map-marker>
+        </sebm-google-map>
     </form>
     <button (click)="addNewPoint()" >add new point</button>
     <button (click)="goToProfile()" >go back</button>
@@ -29,6 +46,8 @@ import { profileRoutes } from "../../user-profile.routes";
 export class PointFormComponent implements OnInit {
   @Input()
   private point: Point;
+  centerLat: number = 56.9711614;
+  centerLng: number = 23.8500817;
 
   constructor(private router: Router){}
 
@@ -36,8 +55,13 @@ export class PointFormComponent implements OnInit {
     if (!this.point) {
       this.point = new Point();
       this.point.address = new Address();
+      this.point.geoLocation = {lat: undefined, lng: undefined};
     }
     console.log("LOADED POINT", this.point);
+  }
+
+  initPointLocation($event: MouseEvent) {
+    this.point.geoLocation = $event.coords
   }
 
   addNewPoint(): void {

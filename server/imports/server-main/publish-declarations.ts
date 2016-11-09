@@ -21,6 +21,11 @@ export function publishCollections() {
   );
 
   Meteor.publish (
+    "points",
+    () => PointCollection.find({})
+  );
+
+  Meteor.publish (
     "offers",
     () => OfferCollection.find({})
   );

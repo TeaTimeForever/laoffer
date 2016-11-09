@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { AccountsModule } from "angular2-meteor-accounts-ui";
 import { AddressFieldsetComponent } from "./components/address-fieldset/address-fieldset.component";
+import { AgmCoreModule } from "angular2-google-maps/core";
 
 @NgModule({
   declarations: [
@@ -10,11 +11,15 @@ import { AddressFieldsetComponent } from "./components/address-fieldset/address-
   ],
   exports: [
     AccountsModule,
-    AddressFieldsetComponent
+    AddressFieldsetComponent,
+    AgmCoreModule
   ],
   imports: [
     CommonModule,
     FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
+    })
   ]
 })
 export class SharedModule {

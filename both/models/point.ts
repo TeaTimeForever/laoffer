@@ -5,7 +5,7 @@ export class Point {
   _id?: ObjectID;
   name: string;
   companyId: ObjectID;
-  geoLocation: string;
+  geoLocation: {lat: number, lng: number};
   address?: Address;
   phone: string;
 

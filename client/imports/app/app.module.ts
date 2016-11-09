@@ -8,6 +8,7 @@ import { preparedAppRoutes } from "./app.routes";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { SharedModule } from "./shared/shared.module";
 import { HomeComponent } from "./home/home.component";
+import { AgmCoreModule } from "angular2-google-maps/core";
 
 @NgModule({
   declarations: [
