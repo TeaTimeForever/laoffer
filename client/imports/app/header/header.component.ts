@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'common-header',
   template: `
-<div class="ui top yellow attached segment">
+<div class="row">
     <login-buttons></login-buttons>
 </div>
 `
