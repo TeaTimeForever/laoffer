@@ -15,19 +15,22 @@ export function publishCollections() {
     }});
   });
 
-  Meteor.publish (
+  Meteor.publish(
     "company-points",
     (companyId: ObjectID) => PointCollection.find({companyId: companyId}, {})
   );
 
-  Meteor.publish (
-    "points",
-    () => PointCollection.find({})
+  Meteor.publish(
+    "points", () => PointCollection.find({})
   );
 
-  Meteor.publish (
-    "offers",
-    () => OfferCollection.find({})
+  Meteor.publish(
+    "offers", () => OfferCollection.find({})
+  );
+
+  Meteor.publish(
+    "point-offers",
+    (pointId: ObjectID) => OfferCollection.find({pointId: pointId}, {})
   );
 
   Meteor.publish(
