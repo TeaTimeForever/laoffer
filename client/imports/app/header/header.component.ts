@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   template: `
 <div class="row">
     <login-buttons></login-buttons>
+    <a href="/#/profile">profile</a>
 </div>
 `
 })

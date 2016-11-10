@@ -9,9 +9,7 @@ import { Component } from '@angular/core';
       <router-outlet></router-outlet>
     </div>
   </main>
-  <footer class="page-footer"></footer>
+  <footer class="page-footer">Here will be fancy footer</footer>
 `
 })
-export class AppComponent {
-  constructor() {}
-}
+export class AppComponent {}

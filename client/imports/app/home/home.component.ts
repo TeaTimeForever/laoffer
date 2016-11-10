@@ -8,30 +8,31 @@ import { Point } from "../../../../both/models/point";
 @Component({
   selector: 'home',
   template: `
-home component
-<a href="/#/profile">go to profile</a>
-<br>
-<div class="display: flex;">
-  <sebm-google-map
-    [latitude]="centerLat"
-    [longitude]="centerLng"
-    [zoom]="8"
-    style="width: 500px; height: 500px;">
-    <sebm-google-map-marker *ngFor="let point of points | async"
-      [latitude]="point.geoLocation.lat"
-      [longitude]="point.geoLocation.lng"
-      [title]="point.name"
-      [label]="point.description"
-      [id]="point._id"
-      (markerClick)="pointClicked($event)"></sebm-google-map-marker>
-  </sebm-google-map>
-  <point-offers [point]="selectedPoint"></point-offers>
+<div class="row">
+  <div class="col s12 m6 l6">
+    <sebm-google-map
+      [latitude]="centerLat"
+      [longitude]="centerLng"
+      [zoom]="13"
+      style="width: 100%; height: 400px;">
+      <sebm-google-map-marker *ngFor="let point of points | async"
+        [latitude]="point.geoLocation.lat"
+        [longitude]="point.geoLocation.lng"
+        [title]="point.name"
+        [label]="point.description"
+        [id]="point._id"
+        (markerClick)="pointClicked($event)"></sebm-google-map-marker>
+    </sebm-google-map>
+  </div>
+  <div class="col s12 m6 l6">
+    <point-offers [point]="selectedPoint"></point-offers>
+  </div>
 </div>
 `
 })
 export class HomeComponent implements OnDestroy {
-  private centerLat: number = 56.9711614;
-  private centerLng: number = 23.8500817;
+  private centerLat: number = 56.9512274;
+  private centerLng: number = 24.1019255;
   private pointSubscription: Subscription;
   private points: Observable<Point[]>;
   private selectedPoint: Point;

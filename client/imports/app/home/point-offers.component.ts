@@ -10,13 +10,11 @@ import { Point } from "../../../../both/models/point";
 @Component({
   selector: "point-offers",
   template: `
-    <div> point-offers
-        <div *ngIf="point">{{point.name}}</div>
-        <div *ngFor="let offer of offers | async">
-            {{offer.whenActive}} <br>
-            {{offer.price}} <br>
+    <div class="container">
+        <h5 *ngIf="point">{{point.name}}</h5>
+        <div class="card" *ngFor="let offer of offers | async">
             {{offer.molecule}} <br>
-            <hr>
+            {{offer.price}} <br>
         </div>
     </div>
 `
