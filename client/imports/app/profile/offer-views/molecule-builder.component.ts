@@ -6,7 +6,8 @@ import { AtomCollection } from "../../../../../both/collections/atom.collection"
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { Observable } from "rxjs";
-import { Category, categories } from "../../../../../both/models/category.type";
+import { categories, Category } from "../../../../../both/models/category.type";
+import { Molecule } from "../../../../../both/models/molecule";
 
 @Component({
   selector: 'molecule-builder',
@@ -26,12 +27,12 @@ import { Category, categories } from "../../../../../both/models/category.type";
 })
 export class MoleculeBuilderComponent implements  OnDestroy {
   @Input()
-  private molecule: Array<Atom|Category>;
+  private molecule: Molecule;
 
   private atoms: Observable<Atom[]>;
   private dragSubscription: Subscription;
   private atomSubscription;
-  private categories;
+  private categories: Category[];
 
   constructor(private dragulaService: DragulaService){
     this.categories = categories;
@@ -44,20 +45,20 @@ export class MoleculeBuilderComponent implements  OnDestroy {
       if(value[1].localName.includes("atom-label")) {
         let droppedAtomId = value[1].childNodes[0].dataset.atomid;
         if (value[2].className.includes("molecule")) {
-          this.molecule.push(AtomCollection.findOne({_id: droppedAtomId }));
+          this.molecule.atoms.push(AtomCollection.findOne({_id: droppedAtomId }));
         } else {
-          this.molecule = this.molecule.filter((atom: any) => atom._id !== droppedAtomId);
+          this.molecule.atoms = this.molecule.atoms.filter((atom: any) => atom._id !== droppedAtomId);
         }
       } else if (value[1].localName.includes("category-label")) {
         let droppedCategory = value[1].childNodes[0].dataset.category;
         if (value[2].className.includes("molecule")) {
-          this.molecule.push(droppedCategory);
+          this.molecule.categories.push(droppedCategory);
         } else {
-          this.molecule = this.molecule.filter(item => item !== droppedCategory);
+          this.molecule.categories = this.molecule.categories.filter(item => item !== droppedCategory);
         }
       }
+      console.log("molecule state", this.molecule);
     });
-
   }
 
   ngOnDestroy(): void {

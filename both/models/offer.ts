@@ -1,11 +1,10 @@
 import ObjectID = Mongo.ObjectID;
-import { Atom } from "./atom";
-import { Category } from "./category.type";
+import { Molecule } from "./molecule";
 
 export interface Offer {
   _id?: ObjectID;
   pointId: ObjectID;
   whenActive: string;
   price: number;
-  molecule: Array<Atom|Category>;
+  molecule: Molecule;
 }

@@ -13,7 +13,7 @@ import { Point } from "../../../../both/models/point";
     <div class="container">
         <h5 *ngIf="point">{{point.name}}</h5>
         <div class="card" *ngFor="let offer of offers | async">
-            {{offer.molecule}} <br>
+            
             {{offer.price}} <br>
         </div>
     </div>

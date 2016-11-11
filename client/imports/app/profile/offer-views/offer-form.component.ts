@@ -5,8 +5,7 @@ import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
-import { Category } from "../../../../../both/models/category.type";
-import { Atom } from "../../../../../both/models/atom";
+import { Molecule } from "../../../../../both/models/molecule";
 
 @Component({
   selector: 'offer-form',
@@ -14,12 +13,15 @@ import { Atom } from "../../../../../both/models/atom";
     <form>
         <h2>prepare new offer</h2>
         <div>select points</div>
-        <div *ngFor="let point of points | async">
-            {{point.name}} 
-            <input type="checkbox"
-                   name="selectPoints"
-                   (change)="select(point, $event.target.checked)"/>
-        </div>
+        
+        <p *ngFor="let point of points | async">
+          <input type="checkbox" 
+                 [attr.id]="'cb_' + point.name" 
+                 name="selectPoints" 
+                 (change)="select(point, $event.target.checked)"/>
+          <label [attr.for]="'cb_'+point.name">{{point.name}} </label>
+        </p>
+        
         <div>price: 
             <input [(ngModel)]="price" 
                    type="number" 
@@ -41,7 +43,7 @@ export class OfferFormComponent implements  OnDestroy {
   private points;
   private whenActive: string;
   private price: number;
-  private molecule: Array<Atom|Category>;
+  private molecule: Molecule;
 
   private pointSubscription: Subscription;
   private selectedPoints: { [key:string]:{point: Point, selected: boolean}; } = {};
@@ -50,7 +52,10 @@ export class OfferFormComponent implements  OnDestroy {
 
   constructor(){
     this.companyId = (<UserData>Meteor.user()).companyId;
-    this.molecule = [];
+    this.molecule = {
+      atoms: [],
+      categories: []
+    };
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", this.companyId)
       .subscribe();

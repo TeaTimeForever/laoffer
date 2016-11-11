@@ -7,7 +7,7 @@ export type Category =
   "Dish" |
   "Soup";
 
-export var categories = [
+export var categories: Category[] = [
   "Drink",
   "Dessert",
   "Salad",
