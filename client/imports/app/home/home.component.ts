@@ -21,7 +21,7 @@ import { Point } from "../../../../both/models/point";
         [title]="point.name"
         [label]="point.description"
         [id]="point._id"
-        (markerClick)="pointClicked($event)"></sebm-google-map-marker>
+        (markerClick)="pointClicked(point._id)"></sebm-google-map-marker>
     </sebm-google-map>
   </div>
   <div class="col s12 m6 l6">

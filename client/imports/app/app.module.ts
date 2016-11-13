@@ -9,12 +9,14 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { SharedModule } from "./shared/shared.module";
 import { HomeComponent } from "./home/home.component";
 import { PointOffersComponent } from "./home/point-offers.component";
+import { AtomPreviewComponent } from "./home/atom-preview.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    AtomPreviewComponent,
     PointOffersComponent
   ],
   entryComponents: [

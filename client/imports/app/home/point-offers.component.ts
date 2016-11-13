@@ -12,29 +12,15 @@ import { Point } from "../../../../both/models/point";
   template: `
     <div class="container">
         <h5 *ngIf="point">{{point.name}}</h5>
-        <div class="card" *ngFor="let offer of offers | async">
-          
-          <ul class="collapsible" data-collapsible="accordion" materialize="collapsible">
-            <li class="collection-item" *ngFor="let atom of offer.molecule.atoms">
-              <div class="collapsible-header">{{atom.name}}
-                <span class="badge">{{atom.price}} EUR</span>
-                 <div class="chip" *ngFor="let tag of atom.tags">
-                  {{tag}}
-                </div>
-                <div class="chip">
-                  {{atom.category}}
-                </div>
-              </div>
-              <div class="collapsible-body"><p>{{atom.description}}</p></div>
-            </li>
-            <li class="collection-item" *ngFor="let category of offer.molecule.categories">
-              <div class="collapsible-header">{{category}}</div>
-            </li>
-            <li class="collection-item">
-              <div class="collapsible-header"><i class="material-icons">euro_symbol</i>{{offer.price}}</div>
-            </li>
-          </ul>
-        </div>
+        <ul class="collection" data-collapsible="accordion" materialize="collapsible">
+          <li class="collection-item avatar" *ngFor="let offer of offers | async">
+            <i class="material-icons circle">restaurant</i>
+            <span class="teal white-text badge" data-badge-caption="EUR">{{offer.price}} EUR</span>
+            <atom-preview [atom]="atom" *ngFor="let atom of offer.molecule.atoms"></atom-preview>
+            <div *ngFor="let category of offer.molecule.categories">{{category}}</div>
+            
+          </li>
+        </ul>
     </div>
 `
 })
