@@ -5,9 +5,8 @@ import { publishCollections } from "./publish-declarations";
 
 export class Main {
   start(): void {
-    // this.clearAllData();
     this.initFakeData();
-    publishCollections()
+    publishCollections();
   }
 
   initFakeData(): void {

@@ -8,7 +8,7 @@ import { OfferCollection } from "../../../../../both/collections/offer.collectio
 import { Molecule } from "../../../../../both/models/molecule";
 
 @Component({
-  selector: 'offer-form',
+  selector: "offer-form",
   template: `
     <form>
         <h2>prepare new offer</h2>

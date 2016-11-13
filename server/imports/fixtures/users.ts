@@ -57,7 +57,7 @@ export function loadUsers() {
       let id = Accounts.createUser({
         username: user.email,
         email: user.email,
-        password: 'qwe'
+        password: "qwe"
       });
       Meteor.users.update(id, {
         $set: {

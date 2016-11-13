@@ -1,5 +1,4 @@
 import { Component, Input } from "@angular/core";
-import { Atom } from "../../../../../both/models/atom";
 import { Category } from "../../../../../both/models/category.type";
 
 @Component({

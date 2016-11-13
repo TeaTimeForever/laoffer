@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 import { Point } from "../../../../both/models/point";
 
 @Component({
-  selector: 'home',
+  selector: "home",
   template: `
 <div class="row">
   <div class="col s12 m6 l6">

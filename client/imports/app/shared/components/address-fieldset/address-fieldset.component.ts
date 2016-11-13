@@ -4,7 +4,7 @@ import { Point } from "../../../../../../both/models/point";
 import { Address } from "../../../../../../both/models/address";
 
 @Component({
-  selector: 'address-fieldset',
+  selector: "address-fieldset",
   template: `
     <input [(ngModel)]="address.country" 
            type="text"

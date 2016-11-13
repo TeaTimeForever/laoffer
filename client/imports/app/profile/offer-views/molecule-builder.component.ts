@@ -10,7 +10,7 @@ import { categories, Category } from "../../../../../both/models/category.type";
 import { Molecule } from "../../../../../both/models/molecule";
 
 @Component({
-  selector: 'molecule-builder',
+  selector: "molecule-builder",
   template: `
 <div class="molecule"
      style="background-color: aquamarine; min-height: 100px; min-width: 100px;"

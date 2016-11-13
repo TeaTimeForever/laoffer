@@ -7,7 +7,7 @@ import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 
 @Component({
-  selector: 'main-profile-view',
+  selector: "main-profile-view",
   template: `
     <ul>
         <li *ngFor="let point of points | async">

@@ -7,7 +7,7 @@ import { profileRoutes } from "../../user-profile.routes";
 import { MouseEvent } from "angular2-google-maps/core";
 
 @Component({
-  selector: 'point-form',
+  selector: "point-form",
   template: `
     <h3>Please add info about your new point</h3>
     <form (submit)="addNewPoint()">

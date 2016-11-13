@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-  selector: 'editable-point',
+  selector: "editable-point",
   template: `
     <point-form></point-form>
 `
