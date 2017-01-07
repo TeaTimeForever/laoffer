@@ -8,7 +8,6 @@ export class Atom {
   tags: string[];
   category: Category;
   name: string;
-  description: string;
 
   constructor(companyId?: ObjectID) {
     this.companyId = companyId;

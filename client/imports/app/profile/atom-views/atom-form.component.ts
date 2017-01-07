@@ -19,10 +19,6 @@ import ObjectID = Mongo.ObjectID;
                    type="number" 
                    placeholder="price"
                    name="price"></div>
-        <div>description:
-            <textarea [(ngModel)]="atom.description" 
-                      name="description" 
-                      cols="30" rows="10"></textarea></div>
         <div>category:
             <select [(ngModel)]="atom.category" 
                     name="category">
