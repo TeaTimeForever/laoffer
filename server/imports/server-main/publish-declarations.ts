@@ -24,6 +24,12 @@ export function publishCollections() {
     "points", () => PointCollection.find({})
   );
 
+  Meteor.methods({
+    "points.remove" (pointId: ObjectID) {
+      PointCollection.remove({_id: pointId});
+    }
+  });
+
   Meteor.publish(
     "offers", () => OfferCollection.find({})
   );
@@ -37,6 +43,8 @@ export function publishCollections() {
     "company-atoms",
     (companyId: ObjectID) => AtomCollection.find({companyId: companyId}, {})
   );
+
+
 
 
 }
