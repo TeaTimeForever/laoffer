@@ -5,12 +5,13 @@ import { Address } from "../../../../../../both/models/address";
 import { PointCollection } from "../../../../../../both/collections/point.collection";
 import { profileRoutes } from "../../user-profile.routes";
 import { MouseEvent } from "angular2-google-maps/core";
+import ObjectID = Mongo.ObjectID;
 
 @Component({
   selector: "point-form",
   template: `
     <h3>Please add info about your new point</h3>
-    <form (submit)="addNewPoint()">
+    <form (submit)="savePoint()">
         <address-fieldset [address]="point.address"></address-fieldset>
         <input [(ngModel)]="point.phone"
                type="text"
@@ -39,13 +40,15 @@ import { MouseEvent } from "angular2-google-maps/core";
                 [longitude]="point.geoLocation.lng"></sebm-google-map-marker>
         </sebm-google-map>
     </form>
-    <button (click)="addNewPoint()" >add new point</button>
+    <button (click)="savePoint()" >save</button>
     <button (click)="goToProfile()" >go back</button>
 `
 })
 export class PointFormComponent implements OnInit {
   @Input()
   private point: Point;
+
+  // TODO: get default lat-lng from device
   centerLat: number = 56.9711614;
   centerLng: number = 23.8500817;
 
@@ -61,16 +64,27 @@ export class PointFormComponent implements OnInit {
   }
 
   initPointLocation($event: MouseEvent) {
-    this.point.geoLocation = $event.coords
+    this.point.geoLocation = $event.coords;
   }
 
-  addNewPoint(): void {
+  savePoint(): void {
     console.log("submit processing");
-    if(!Meteor.userId()) {
+    if (!Meteor.userId()) {
       alert("please login");
     } else {
       console.log("POINT ON SUBMIT", this.point);
-      PointCollection.insert(this.point);
+
+      // TODO: use upsert instead of this shit
+      if (this.point._id) {
+        PointCollection.update(this.point._id, {$set: {
+          name: this.point.name,
+          address: this.point.address,
+          geoLocation: this.point.geoLocation,
+          phone: this.point.phone
+        }});
+      } else {
+        PointCollection.insert(this.point);
+      }
       this.goToProfile();
     }
   }
