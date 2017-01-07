@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
   <header><common-header></common-header></header>
   <main>
-    <div class="container">
+    <div class="container" style="width: 100%">
       <router-outlet></router-outlet>
     </div>
   </main>
