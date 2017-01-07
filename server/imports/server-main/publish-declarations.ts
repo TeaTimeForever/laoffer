@@ -43,8 +43,4 @@ export function publishCollections() {
     "company-atoms",
     (companyId: ObjectID) => AtomCollection.find({companyId: companyId}, {})
   );
-
-
-
-
 }

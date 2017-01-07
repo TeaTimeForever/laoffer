@@ -22,8 +22,6 @@ import ObjectID = Mongo.ObjectID;
         </li>
     </ul>
     <a (click)="goToNewPoint()" href="javascript:void(0)">add new point</a>
-    <hr>
-    <a (click)="goToNewOffer()" href="javascript:void(0)">add new offer</a>
   </div>
   <div *ngIf="selectedPoint" class="col s12 m6 l6">
     <point-form [point]="selectedPoint"></point-form>
@@ -31,7 +29,7 @@ import ObjectID = Mongo.ObjectID;
 </div>
 `
 })
-export class InitProfileComponent implements OnDestroy {
+export class OfferListComponent implements OnDestroy {
 
   private points;
   private pointSubscription: Subscription;
@@ -46,10 +44,6 @@ export class InitProfileComponent implements OnDestroy {
 
   private goToNewPoint(): void {
     this.router.navigate([profileRoutes.moduleRoot.path, profileRoutes.toNewPoint.path]);
-  }
-
-  private goToNewOffer(): void {
-    this.router.navigate([profileRoutes.moduleRoot.path, profileRoutes.toNewOffer.path]);
   }
 
   ngOnDestroy(): void {

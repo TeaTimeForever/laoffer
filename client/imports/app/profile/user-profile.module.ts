@@ -6,7 +6,7 @@ import { PointFormComponent } from "./points-views/point-form/point-form.compone
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { profileRoutes } from "./user-profile.routes";
-import { InitProfileComponent } from "./init-profile/init-profile.component";
+import { OfferListComponent } from "./offer-views/offer-list.component";
 import { EditablePointComponent } from "./points-views/point-form/editable-point.component";
 import { OfferFormComponent } from "./offer-views/offer-form.component";
 import { AtomLabelComponent } from "./atom-views/atom-label.component";
@@ -19,7 +19,7 @@ import { CategoryLabelComponent } from "./atom-views/category-label.component";
   declarations: [
     UserProfileComponent,
     PointFormComponent,
-    InitProfileComponent,
+    OfferListComponent,
     EditablePointComponent,
     OfferFormComponent,
     MoleculeBuilderComponent,

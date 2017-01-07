@@ -1,12 +1,13 @@
 import { UserProfileComponent } from "./user-profile.component";
-import { InitProfileComponent } from "./init-profile/init-profile.component";
+import { OfferListComponent } from "./offer-views/offer-list.component";
 import { EditablePointComponent } from "./points-views/point-form/editable-point.component";
 import { OfferFormComponent } from "./offer-views/offer-form.component";
 
 const children = {
-  toModuleHome: {path: "", component: InitProfileComponent },
+  toModuleHome: {path: "", component: OfferListComponent },
   toNewPoint: {path: "new-point", component: EditablePointComponent },
-  toNewOffer: {path: "new-offer", component: OfferFormComponent }
+  toNewOffer: {path: "new-offer", component: OfferFormComponent },
+  toOfferList: {path: "offer-list", component: OfferListComponent }
 };
 
 export var profileRoutes: any = Object.create(children);
