@@ -72,13 +72,14 @@ export class OfferFormComponent implements  OnDestroy {
   }
 
   saveOffer() {
-    Object.keys(this.selectedPoints)
-          .filter(k => this.selectedPoints[k].selected)
-          .forEach(key => OfferCollection.insert({
-      pointId: this.selectedPoints[key].point._id,
+    let selectedPointIds = Object.keys(this.selectedPoints)
+      .filter(k => this.selectedPoints[k].selected)
+      .map(k => this.selectedPoints[k].point._id);
+    OfferCollection.insert({
+      pointIds: selectedPointIds,
       whenActive: this.whenActive,
       price: this.price,
       molecule: this.molecule,
-    }));
+    });
   }
 }

@@ -36,7 +36,7 @@ export function publishCollections() {
 
   Meteor.publish(
     "point-offers",
-    (pointId: ObjectID) => OfferCollection.find({pointId: pointId}, {})
+    (pointId: ObjectID) => OfferCollection.find({pointIds: { $in: [ pointId.valueOf()]}}, {})
   );
 
   Meteor.publish(

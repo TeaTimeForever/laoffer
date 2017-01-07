@@ -3,7 +3,7 @@ import { Molecule } from "./molecule";
 
 export interface Offer {
   _id?: ObjectID;
-  pointId: ObjectID;
+  pointIds: ObjectID[];
   whenActive: string;
   price: number;
   molecule: Molecule;
