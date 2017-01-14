@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
-import { Router } from "@angular/router";
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { Offer } from "../../../../../both/models/offer";
@@ -34,9 +33,9 @@ export class OfferListComponent implements OnDestroy {
   private offerSubscription: Subscription;
   private selectedOffer;
 
-  constructor(private router: Router) {
+  constructor() {
     this.offerSubscription = MeteorObservable
-      .subscribe("company-offers2", (<UserData>Meteor.user()).companyId)
+      .subscribe("company-offers", (<UserData>Meteor.user()).companyId)
       .subscribe();
     this.offers = OfferCollection.find({}).zone();
   }
