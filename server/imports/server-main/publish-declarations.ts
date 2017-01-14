@@ -27,6 +27,10 @@ export function publishCollections() {
   Meteor.methods({
     "points.remove" (pointId: ObjectID) {
       PointCollection.remove({_id: pointId});
+    },
+
+    "offer.remove" (offerId: ObjectID) {
+      OfferCollection.remove({_id: offerId});
     }
   });
 
