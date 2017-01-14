@@ -27,6 +27,10 @@ export function publishCollections() {
   Meteor.methods({
     "points.remove" (pointId: ObjectID) {
       PointCollection.remove({_id: pointId});
+    },
+
+    "company.points" () {
+
     }
   });
 
@@ -40,7 +44,11 @@ export function publishCollections() {
   );
 
   Meteor.publish(
-    "company-atoms",
-    (companyId: ObjectID) => AtomCollection.find({companyId: companyId}, {})
+    "points-offers",
+    (pointIds: ObjectID[]) => OfferCollection.find({pointIds: { $in: [ pointIds.map(p => p.valueOf())]}}, {})
+  );
+
+  Meteor.publish(
+    "company-atoms", (companyId: ObjectID) => AtomCollection.find({companyId: companyId}, {})
   );
 }

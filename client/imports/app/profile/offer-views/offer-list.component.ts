@@ -7,54 +7,56 @@ import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { Point } from "../../../../../both/models/point";
 import ObjectID = Mongo.ObjectID;
+import { Offer } from "../../../../../both/models/offer";
+import { OfferCollection } from "../../../../../both/collections/offer.collection";
 
 @Component({
-  selector: "main-profile-view",
+  selector: "offer-list",
   template: `
 
 <div class="row">
   <div class="col s12 m6 l6">
     <ul>
-        <li *ngFor="let point of points | async">
-            {{point.name}} 
-            <button type="button" (click)="editPoint(point)">edit</button>
-            <button type="button" (click)="deletePoint(point)">delete</button>
+        <li *ngFor="let offer of offers | async">
+            {{offer.price}} 
+            <button type="button" (click)="editOffer(offer)">edit</button>
+            <button type="button" (click)="deleteOffer(offer)">delete</button>
         </li>
     </ul>
-    <a (click)="goToNewPoint()" href="javascript:void(0)">add new point</a>
+    <a (click)="addNewOffer()" href="javascript:void(0)">add new offer</a>
   </div>
-  <div *ngIf="selectedPoint" class="col s12 m6 l6">
-    <point-form [point]="selectedPoint"></point-form>
+  <div *ngIf="selectedOffer" class="col s12 m6 l6">
+    
   </div>
 </div>
 `
 })
 export class OfferListComponent implements OnDestroy {
 
-  private points;
-  private pointSubscription: Subscription;
-  private selectedPoint;
+  private offers;
+  private offerSubscription: Subscription;
+  private selectedOffer;
 
-  constructor(private router: Router){
-    this.pointSubscription = MeteorObservable
-      .subscribe("company-points", (<UserData>Meteor.user()).companyId)
+  constructor(private router: Router) {
+    this.offerSubscription = MeteorObservable
+      .subscribe("points-offers", (<UserData>Meteor.user()).companyId)
       .subscribe();
-    this.points = PointCollection.find({}).zone();
+    this.offers = OfferCollection.find({}).zone();
   }
 
-  private goToNewPoint(): void {
-    this.router.navigate([profileRoutes.moduleRoot.path, profileRoutes.toNewPoint.path]);
+  private addNewPoint(): void {
+    // TODO: implement me
   }
 
   ngOnDestroy(): void {
-    this.pointSubscription.unsubscribe();
+    this.offerSubscription.unsubscribe();
   }
 
-  private deletePoint(point: Point) {
-    Meteor.call("points.remove", point._id);
+  private deleteOffer(offer: Offer) {
+    Meteor.call("offer.remove", offer._id);
   }
 
-  editPoint(point: Point) {
-    this.selectedPoint = point;
+  editOffer(offer: Offer) {
+    this.selectedOffer = offer;
   }
 }

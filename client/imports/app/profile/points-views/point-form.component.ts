@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Router } from "@angular/router";
-import { Point } from "../../../../../../both/models/point";
-import { Address } from "../../../../../../both/models/address";
-import { PointCollection } from "../../../../../../both/collections/point.collection";
-import { profileRoutes } from "../../user-profile.routes";
+import { Point } from "../../../../../both/models/point";
+import { Address } from "../../../../../both/models/address";
+import { PointCollection } from "../../../../../both/collections/point.collection";
+import { profileRoutes } from "../user-profile.routes";
 import { MouseEvent } from "angular2-google-maps/core";
 import ObjectID = Mongo.ObjectID;
 
