@@ -13,8 +13,4 @@ export class Main {
     loadCompanies();
     loadUsers();
   }
-
-  clearAllData(): void {
-    CompanyCollection.remove({});
-  }
 }
