@@ -36,7 +36,7 @@ export class OfferListComponent implements OnDestroy {
 
   constructor(private router: Router) {
     this.offerSubscription = MeteorObservable
-      .subscribe("company-offers", (<UserData>Meteor.user()).companyId)
+      .subscribe("company-offers2", (<UserData>Meteor.user()).companyId)
       .subscribe();
     this.offers = OfferCollection.find({}).zone();
   }

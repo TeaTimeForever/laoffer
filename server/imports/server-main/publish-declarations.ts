@@ -39,9 +39,25 @@ export function publishCollections() {
     (pointId: ObjectID) => OfferCollection.find({pointIds: { $in: [ pointId.valueOf()]}}, {})
   );
 
+  Meteor["publishComposite"] (
+    "company-offers2",
+    (companyId: ObjectID) => {
+      return {
+        find: () => PointCollection.find({companyId: companyId}, {}),
+        children: [{
+          find(point) {
+            console.log("POINT", point);
+            return OfferCollection.find({pointIds: { $in: [point._id]}}, {});
+          }
+        }]
+      };
+    }
+  );
+
   Meteor.publish(
     "company-offers",
     (companyId: ObjectID) => {
+
       let pointIds: ObjectID[] = PointCollection.find({companyId: companyId}, {}).cursor.map(p => p._id);
       return OfferCollection.find({pointIds: { $in: pointIds}}, {});
     }
