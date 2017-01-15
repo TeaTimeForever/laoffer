@@ -1,5 +1,4 @@
-import { Component, OnDestroy, Input, OnInit, OnChanges } from "@angular/core";
-import { Point } from "../../../../../both/models/point";
+import { Component, OnDestroy, Input, OnChanges } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
@@ -20,26 +19,31 @@ import ObjectID = Mongo.ObjectID;
                  [attr.id]="'cb_' + point.name" 
                  name="selectPoints" 
                  [checked]="selectedPoints.has(point._id)"
-                 (change)="select(point, $event.target.checked)"/>
+                 (change)="select(point, $event.target.checked)"
+                 [disabled]="!editable"/>
           <label [attr.for]="'cb_' + point.name">{{point.name}} </label>
         </p>
         <div>name: 
             <input [(ngModel)]="offer.name" 
                    type="text" 
                    placeholder="some name"
-                   name="name"></div>
+                   name="name"
+                   [disabled]="!editable"></div>
         <div>price: 
             <input [(ngModel)]="offer.price" 
                    type="number" 
                    placeholder="1.00"
-                   name="price"></div>
+                   name="price"
+                   [disabled]="!editable"></div>
         <div>when active: 
             <input [(ngModel)]="offer.whenActive" 
                    type="text" 
                    placeholder="work days 10 - 16"
-                   name="whenActive"></div>
+                   name="whenActive"
+                   [disabled]="!editable"></div>
         <molecule-builder [molecule]="offer.molecule"></molecule-builder>
-        <button type="submit">save</button>
+        <button *ngIf="editable" type="submit">save</button>
+        <button *ngIf="!editable" type="button" (click)="editOffer()">edit</button>
     </form>
     <atom-form [companyId]="companyId"></atom-form>
 `
@@ -47,6 +51,7 @@ import ObjectID = Mongo.ObjectID;
 export class OfferFormComponent implements  OnDestroy, OnChanges {
 
   private points;
+  private editable = false;
 
   @Input()
   private offer: Offer;
@@ -72,9 +77,26 @@ export class OfferFormComponent implements  OnDestroy, OnChanges {
     }
   }
 
-  saveOffer() {
+  private editOffer() {
+    this.editable = true;
+  }
+
+  private saveOffer() {
+    this.editable = false;
     this.offer.pointIds = Array.from(this.selectedPoints);
-    OfferCollection.insert(this.offer);
+    // TODO: use upsert instead of this shit
+    if (this.offer._id) {
+      OfferCollection.update(this.offer._id, {$set: {
+        pointIds: this.offer.pointIds,
+        companyId: this.offer.companyId,
+        name: this.offer.name,
+        whenActive: this.offer.whenActive,
+        price: this.offer.price,
+        molecule: this.offer.molecule
+      }});
+    } else {
+      OfferCollection.insert(this.offer);
+    }
   }
 
   ngOnChanges() {
