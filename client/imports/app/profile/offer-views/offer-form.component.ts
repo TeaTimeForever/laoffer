@@ -1,4 +1,4 @@
-import { Component, OnDestroy, Input } from "@angular/core";
+import { Component, OnDestroy, Input, OnInit, OnChanges } from "@angular/core";
 import { Point } from "../../../../../both/models/point";
 import { Subscription } from "rxjs/Subscription";
 import { MeteorObservable } from "meteor-rxjs";
@@ -6,6 +6,7 @@ import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
 import { Offer } from "../../../../../both/models/offer";
+import ObjectID = Mongo.ObjectID;
 
 @Component({
   selector: "offer-form",
@@ -18,6 +19,7 @@ import { Offer } from "../../../../../both/models/offer";
           <input type="checkbox" 
                  [attr.id]="'cb_' + point.name" 
                  name="selectPoints" 
+                 [checked]="selectedPoints.has(point._id)"
                  (change)="select(point, $event.target.checked)"/>
           <label [attr.for]="'cb_' + point.name">{{point.name}} </label>
         </p>
@@ -42,7 +44,7 @@ import { Offer } from "../../../../../both/models/offer";
     <atom-form [companyId]="companyId"></atom-form>
 `
 })
-export class OfferFormComponent implements  OnDestroy {
+export class OfferFormComponent implements  OnDestroy, OnChanges {
 
   private points;
 
@@ -50,8 +52,8 @@ export class OfferFormComponent implements  OnDestroy {
   private offer: Offer;
 
   private pointSubscription: Subscription;
-  private selectedPoints: {[key: string]: {point: Point, selected: boolean}} = {};
   private companyId: Mongo.ObjectID;
+  private selectedPoints: Set<ObjectID>;
 
   constructor() {
     this.companyId = (<UserData>Meteor.user()).companyId;
@@ -59,19 +61,27 @@ export class OfferFormComponent implements  OnDestroy {
       .subscribe("company-points", this.companyId)
       .subscribe();
 
-    // TODO: remove points. Should use only one tmp variable
     this.points = PointCollection.find({}).zone();
   }
 
   select(point, selected) {
-    this.selectedPoints[point._id] = {point, selected};
+    if (selected) {
+      this.selectedPoints.add(point._id);
+    } else {
+      this.selectedPoints.delete(point._id);
+    }
+    console.log(this.offer.pointIds);
   }
 
   saveOffer() {
-    this.offer.pointIds = Object.keys(this.selectedPoints)
-      .filter(k => this.selectedPoints[k].selected);
+    console.log("try to save", this.offer);
+    this.offer.pointIds = Array.from(this.selectedPoints);
     OfferCollection.insert(this.offer);
 
+  }
+
+  ngOnChanges() {
+    this.selectedPoints = new Set(this.offer.pointIds);
   }
 
   ngOnDestroy() {
