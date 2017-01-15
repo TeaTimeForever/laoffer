@@ -70,14 +70,11 @@ export class OfferFormComponent implements  OnDestroy, OnChanges {
     } else {
       this.selectedPoints.delete(point._id);
     }
-    console.log(this.offer.pointIds);
   }
 
   saveOffer() {
-    console.log("try to save", this.offer);
     this.offer.pointIds = Array.from(this.selectedPoints);
     OfferCollection.insert(this.offer);
-
   }
 
   ngOnChanges() {
