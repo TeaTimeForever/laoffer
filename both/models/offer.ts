@@ -13,11 +13,14 @@ export interface Offer {
 export namespace Offer {
   export function init() {
     return {
-      pointIds: undefined,
+      pointIds: [],
       name: undefined,
       whenActive: undefined,
       price: undefined,
-      molecule: undefined
+      molecule: {
+        atoms: [],
+        categories: []
+      }
     };
   }
 }

@@ -1,11 +1,10 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, Input } from "@angular/core";
 import { Point } from "../../../../../both/models/point";
 import { Subscription } from "rxjs/Subscription";
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
-import { Molecule } from "../../../../../both/models/molecule";
 import { Offer } from "../../../../../both/models/offer";
 
 @Component({
@@ -46,6 +45,8 @@ import { Offer } from "../../../../../both/models/offer";
 export class OfferFormComponent implements  OnDestroy {
 
   private points;
+
+  @Input()
   private offer: Offer;
 
   private pointSubscription: Subscription;
@@ -53,11 +54,6 @@ export class OfferFormComponent implements  OnDestroy {
   private companyId: Mongo.ObjectID;
 
   constructor() {
-    this.offer = Offer.init();
-    this.offer.molecule = {
-      atoms: [],
-      categories: []
-    };
     this.companyId = (<UserData>Meteor.user()).companyId;
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", this.companyId)
@@ -75,6 +71,7 @@ export class OfferFormComponent implements  OnDestroy {
     this.offer.pointIds = Object.keys(this.selectedPoints)
       .filter(k => this.selectedPoints[k].selected);
     OfferCollection.insert(this.offer);
+
   }
 
   ngOnDestroy() {

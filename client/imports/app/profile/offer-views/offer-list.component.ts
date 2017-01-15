@@ -22,7 +22,7 @@ import ObjectID = Mongo.ObjectID;
     <a (click)="addNewOffer()" href="javascript:void(0)">add new offer</a>
   </div>
   <div *ngIf="selectedOffer" class="col s12 m6 l6">
-    
+    <offer-form [offer]="selectedOffer"></offer-form>
   </div>
 </div>
 `
@@ -40,8 +40,8 @@ export class OfferListComponent implements OnDestroy {
     this.offers = OfferCollection.find({}).zone();
   }
 
-  private addNewPoint(): void {
-    // TODO: implement me
+  private addNewOffer() {
+    this.selectedOffer = Offer.init();
   }
 
   ngOnDestroy(): void {
