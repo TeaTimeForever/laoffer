@@ -9,3 +9,15 @@ export interface Offer {
   price: number;
   molecule: Molecule;
 }
+
+export namespace Offer {
+  export function init() {
+    return {
+      pointIds: undefined,
+      name: undefined,
+      whenActive: undefined,
+      price: undefined,
+      molecule: undefined
+    };
+  }
+}

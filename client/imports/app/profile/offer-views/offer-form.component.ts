@@ -6,11 +6,12 @@ import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
 import { Molecule } from "../../../../../both/models/molecule";
+import { Offer } from "../../../../../both/models/offer";
 
 @Component({
   selector: "offer-form",
   template: `
-    <form>
+    <form (ngSubmit)="saveOffer()">
         <h2>prepare new offer</h2>
         <div>select points</div>
         
@@ -19,21 +20,25 @@ import { Molecule } from "../../../../../both/models/molecule";
                  [attr.id]="'cb_' + point.name" 
                  name="selectPoints" 
                  (change)="select(point, $event.target.checked)"/>
-          <label [attr.for]="'cb_'+point.name">{{point.name}} </label>
+          <label [attr.for]="'cb_' + point.name">{{point.name}} </label>
         </p>
-        
+        <div>name: 
+            <input [(ngModel)]="offer.name" 
+                   type="text" 
+                   placeholder="some name"
+                   name="name"></div>
         <div>price: 
-            <input [(ngModel)]="price" 
+            <input [(ngModel)]="offer.price" 
                    type="number" 
                    placeholder="1.00"
                    name="price"></div>
         <div>when active: 
-            <input [(ngModel)]="whenActive" 
+            <input [(ngModel)]="offer.whenActive" 
                    type="text" 
                    placeholder="work days 10 - 16"
                    name="whenActive"></div>
-        <molecule-builder [molecule]="molecule"></molecule-builder>
-        <button (click)="saveOffer()">save</button>
+        <molecule-builder [molecule]="offer.molecule"></molecule-builder>
+        <button type="submit">save</button>
     </form>
     <atom-form [companyId]="companyId"></atom-form>
 `
@@ -41,45 +46,38 @@ import { Molecule } from "../../../../../both/models/molecule";
 export class OfferFormComponent implements  OnDestroy {
 
   private points;
-  private whenActive: string;
-  private price: number;
-  private molecule: Molecule;
+  private offer: Offer;
 
   private pointSubscription: Subscription;
-  private selectedPoints: { [key:string]:{point: Point, selected: boolean}; } = {};
-  private companyId;
+  private selectedPoints: {[key: string]: {point: Point, selected: boolean}} = {};
+  private companyId: Mongo.ObjectID;
 
-
-  constructor(){
-    this.companyId = (<UserData>Meteor.user()).companyId;
-    this.molecule = {
+  constructor() {
+    this.offer = Offer.init();
+    this.offer.molecule = {
       atoms: [],
       categories: []
     };
+    this.companyId = (<UserData>Meteor.user()).companyId;
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", this.companyId)
       .subscribe();
-    this.points = PointCollection.find({}).zone();
-    this.selectedPoints = {};
-  }
 
-  ngOnDestroy(): void {
-    this.pointSubscription.unsubscribe();
+    // TODO: remove points. Should use only one tmp variable
+    this.points = PointCollection.find({}).zone();
   }
 
   select(point, selected) {
-    this.selectedPoints[point.name] = {point, selected};
+    this.selectedPoints[point._id] = {point, selected};
   }
 
   saveOffer() {
-    let selectedPointIds = Object.keys(this.selectedPoints)
-      .filter(k => this.selectedPoints[k].selected)
-      .map(k => this.selectedPoints[k].point._id);
-    OfferCollection.insert({
-      pointIds: selectedPointIds,
-      whenActive: this.whenActive,
-      price: this.price,
-      molecule: this.molecule,
-    });
+    this.offer.pointIds = Object.keys(this.selectedPoints)
+      .filter(k => this.selectedPoints[k].selected);
+    OfferCollection.insert(this.offer);
+  }
+
+  ngOnDestroy() {
+    this.pointSubscription.unsubscribe();
   }
 }
