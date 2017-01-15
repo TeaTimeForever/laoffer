@@ -4,6 +4,7 @@ import { Molecule } from "./molecule";
 export interface Offer {
   _id?: ObjectID;
   pointIds: ObjectID[];
+  companyId: ObjectID;
   name: string;
   whenActive: string;
   price: number;
@@ -11,9 +12,10 @@ export interface Offer {
 }
 
 export namespace Offer {
-  export function init() {
+  export function init(companyId?: ObjectID) {
     return {
       pointIds: [],
+      companyId: companyId,
       name: undefined,
       whenActive: undefined,
       price: undefined,

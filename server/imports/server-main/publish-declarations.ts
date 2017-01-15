@@ -48,6 +48,7 @@ export function publishCollections() {
     (pointId: ObjectID) => OfferCollection.find({pointIds: { $in: [ pointId.valueOf()]}}, {})
   );
 
+  /* // Example how to do reactive related publications
   Meteor["publishComposite"] (
     "company-offers",
     (companyId: ObjectID) => {
@@ -58,6 +59,10 @@ export function publishCollections() {
         }]
       };
     }
+  );*/
+
+  Meteor.publish(
+    "company-offers", (companyId: ObjectID) => OfferCollection.find({companyId: companyId}, {})
   );
 
   Meteor.publish(

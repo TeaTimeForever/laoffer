@@ -41,7 +41,7 @@ export class OfferListComponent implements OnDestroy {
   }
 
   private addNewOffer() {
-    this.selectedOffer = Offer.init();
+    this.selectedOffer = Offer.init((<UserData>Meteor.user()).companyId);
   }
 
   ngOnDestroy(): void {
