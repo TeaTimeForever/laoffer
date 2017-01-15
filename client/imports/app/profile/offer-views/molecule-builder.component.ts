@@ -20,6 +20,7 @@ import { Molecule } from "../../../../../both/models/molecule";
 </div>
 
 <div style="background-color: yellowgreen; min-height: 100px; min-width: 100px;"
+     class="choices"
      [dragula]='"atoms"'>
     <atom-label *ngFor="let atom of atoms | async" 
                 [atom]="atom"></atom-label>
@@ -44,7 +45,8 @@ export class MoleculeBuilderComponent implements OnChanges, OnDestroy {
       .subscribe();
 
     this.dragSubscription = dragulaService.drop.subscribe(value => {
-      if (value[1].localName.includes("atom-label")) {
+      console.log(value);
+      if (value[1].localName.includes("atom-label") && (value[2].className !== value[3].className)) {
         let droppedAtomId = value[1].childNodes[0].dataset.atomid;
         if (value[2].className.includes("molecule")) {
           this.molecule.atoms.push(AtomCollection.findOne({_id: droppedAtomId }));
@@ -62,7 +64,7 @@ export class MoleculeBuilderComponent implements OnChanges, OnDestroy {
     });
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes): void {
     this.atoms = AtomCollection.find({_id: { $nin: this.molecule.atoms.map(a => a._id)}}).zone();
     this.categories = this.categories.filter(c => this.molecule.categories.indexOf(c) < 0);
   }
