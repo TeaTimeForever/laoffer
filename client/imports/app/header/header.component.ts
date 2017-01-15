@@ -5,8 +5,9 @@ import { Component } from '@angular/core';
   template: `
 <div class="row">
   <nav>
-    <login-buttons class="col s6"></login-buttons>
-    <a class="col s6" href="/#/profile">profile</a>
+    <login-buttons class="col s3"></login-buttons>
+    <a class="col s3" href="/#/profile">profile</a>
+    <a class="col s3" href="/#/profile/offer-list">offers</a>
   </nav>
 </div>
 `
