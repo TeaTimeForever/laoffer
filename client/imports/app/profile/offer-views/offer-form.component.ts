@@ -10,42 +10,61 @@ import ObjectID = Mongo.ObjectID;
 @Component({
   selector: "offer-form",
   template: `
-    <form (ngSubmit)="saveOffer()">
-        <h2>prepare new offer</h2>
-        <div>select points</div>
-        
-        <p *ngFor="let point of points | async">
-          <input type="checkbox" 
-                 [attr.id]="'cb_' + point.name" 
-                 name="selectPoints" 
-                 [checked]="selectedPoints.has(point._id)"
-                 (change)="select(point, $event.target.checked)"
-                 [disabled]="!editable"/>
-          <label [attr.for]="'cb_' + point.name">{{point.name}} </label>
-        </p>
-        <div>name: 
-            <input [(ngModel)]="offer.name" 
-                   type="text" 
-                   placeholder="some name"
-                   name="name"
-                   [disabled]="!editable"></div>
-        <div>price: 
-            <input [(ngModel)]="offer.price" 
-                   type="number" 
-                   placeholder="1.00"
-                   name="price"
-                   [disabled]="!editable"></div>
-        <div>when active: 
-            <input [(ngModel)]="offer.whenActive" 
-                   type="text" 
-                   placeholder="work days 10 - 16"
-                   name="whenActive"
-                   [disabled]="!editable"></div>
-        <molecule-builder [molecule]="offer.molecule"></molecule-builder>
-        <button *ngIf="editable" type="submit">save</button>
-        <button *ngIf="!editable" type="button" (click)="editOffer()">edit</button>
-    </form>
-    <atom-form [companyId]="companyId"></atom-form>
+<form (ngSubmit)="saveOffer()">
+  <h4>Prepare offer</h4>
+  
+  <div class="row">
+    <div class="col s6">
+      <label for="selectPoints">Choose points</label>
+      <p *ngFor="let point of points | async">
+        <input type="checkbox" 
+               [attr.id]="'cb_' + point.name" 
+               name="selectPoints" 
+               [checked]="selectedPoints.has(point._id)"
+               (change)="select(point, $event.target.checked)"
+               [disabled]="!editable"/>
+        <label [attr.for]="'cb_' + point.name">{{point.name}} </label>
+      </p>
+    </div>
+    <div class="col s6">
+      <label for="name">Title</label>
+      <input [(ngModel)]="offer.name" 
+             type="text" 
+             placeholder="some name"
+             name="name"
+             [disabled]="!editable"></div>
+             </div>
+  <div class="row">
+    <div class="col s6">
+      <label for="price">Price</label>
+      <input [(ngModel)]="offer.price" 
+             type="number" 
+             placeholder="1.00"
+             name="price"
+             [disabled]="!editable"></div>
+    <div class="col s6">
+      <label for="whenActive">When active</label>
+      <input [(ngModel)]="offer.whenActive" 
+             type="text" 
+             placeholder="work days 10 - 16"
+             name="whenActive"
+             [disabled]="!editable"></div>
+  </div>
+  <molecule-builder *ngIf="editable" [molecule]="offer.molecule"></molecule-builder>
+  <molecule-preview *ngIf="!editable" [molecule]="offer.molecule"></molecule-preview>
+  <br>
+  <button class="waves-effect waves-light btn" 
+          *ngIf="editable" 
+          type="submit">save</button>
+  <button *ngIf="!editable" 
+          type="button" 
+          (click)="editOffer()"
+          class="waves-effect waves-light btn">Edit
+  </button>
+  
+</form>
+
+<atom-form [companyId]="companyId"></atom-form>
 `
 })
 export class OfferFormComponent implements  OnDestroy, OnChanges {

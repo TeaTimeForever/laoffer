@@ -7,27 +7,33 @@ import ObjectID = Mongo.ObjectID;
 @Component({
   selector: "atom-form",
   template: `
-    <form>
-        <h2>prepare new atom</h2>
-        <div>name: 
-            <input [(ngModel)]="atom.name" 
-                   type="text" 
-                   placeholder="some name"
-                   name="name"></div>
-        <div>price: 
-            <input [(ngModel)]="atom.price" 
-                   type="number" 
-                   placeholder="price"
-                   name="price"></div>
-        <div>category:
-            <select [(ngModel)]="atom.category" 
-                    name="category">
-                <option *ngFor="let category of categories" [value]="category">{{category}}</option>
-            </select></div>
-         <div>tags:
-            <input [(ngModel)]="tags" type="text" placeholder="tag1, tag2" name="tags"></div>
-        <button (click)="saveAtom()">save</button>
-    </form>
+<form>
+  <h2>prepare new atom</h2>
+  <div class="row">
+    <div class="col s6">name: 
+      <input [(ngModel)]="atom.name" 
+             type="text" 
+             placeholder="some name"
+             name="name"></div>
+    <div class="col s6">price: 
+      <input [(ngModel)]="atom.price" 
+             type="number" 
+             placeholder="price"
+             name="price"></div>
+  </div>
+  <div class="row">
+    <div class="input-field col s6">
+      <select class="browser-default" [(ngModel)]="atom.category" name="category">
+          <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+      </select>
+      <label>category:</label>
+    </div>
+        
+    <div class="col s6">tags:
+        <input [(ngModel)]="tags" type="text" placeholder="tag1, tag2" name="tags"></div>
+    </div>
+    <button (click)="saveAtom()">save</button>
+</form>
 `
 })
 export class AtomFormComponent {
@@ -46,7 +52,6 @@ export class AtomFormComponent {
   saveAtom() {
     this.atom.companyId = this.companyId;
     this.atom.tags = this.tags.split(",");
-    let a = AtomCollection.insert(this.atom);
-    console.log(a);
+    AtomCollection.insert(this.atom);
   }
 }

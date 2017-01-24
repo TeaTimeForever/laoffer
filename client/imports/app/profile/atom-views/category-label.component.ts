@@ -3,7 +3,7 @@ import { Category } from "../../../../../both/models/category.type";
 
 @Component({
   selector: "category-label",
-  template: `<div style="background-color: darkgoldenrod; display: inline-block; margin: 2px" [attr.data-category]="category">
+  template: `<div class="chip" [attr.data-category]="category">
     {{category}}
 </div>`
 })

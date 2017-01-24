@@ -13,9 +13,8 @@ import ObjectID = Mongo.ObjectID;
 <div class="row">
   <div class="col s12 m6 l6">
     <ul>
-        <li *ngFor="let offer of offers | async">
+        <li *ngFor="let offer of offers | async" (click)="editOffer(offer)">
             {{offer.name}} {{offer.price}} 
-            <button type="button" (click)="editOffer(offer)">edit</button>
             <button type="button" (click)="deleteOffer(offer)">delete</button>
         </li>
     </ul>

@@ -12,15 +12,15 @@ import { Molecule } from "../../../../../both/models/molecule";
 @Component({
   selector: "molecule-builder",
   template: `
-<div class="molecule"
-     style="background-color: aquamarine; min-height: 100px; min-width: 100px;"
+=<div class="molecule card teal"
+     style=" min-height: 100px; min-width: 100px;"
      [dragula]='"atoms"'>
   <atom-label *ngFor="let atom of molecule.atoms" [atom]="atom"></atom-label>
-  <category-label *ngFor="let category of molecule.categories" [category]="category"></category-label>
+  <category-label class="chip" *ngFor="let category of molecule.categories" [category]="category"></category-label>
 </div>
 
-<div style="background-color: yellowgreen; min-height: 100px; min-width: 100px;"
-     class="choices"
+<div class="choices card cyan"
+     style=" min-height: 100px; min-width: 100px;"
      [dragula]='"atoms"'>
     <atom-label *ngFor="let atom of atoms | async" 
                 [atom]="atom"></atom-label>

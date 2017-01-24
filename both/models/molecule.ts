@@ -4,5 +4,5 @@ import { Atom } from "./atom";
 
 export interface Molecule {
   atoms: Atom[];
-  categories: Category[]
+  categories: Category[];
 }

@@ -3,7 +3,7 @@ import { Atom } from "../../../../../both/models/atom";
 
 @Component({
   selector: "atom-label",
-  template: `<div style="background-color: beige; display: inline-block; margin: 2px" [attr.data-atomId]="atom._id">
+  template: `<div class="chip" [attr.data-atomId]="atom._id">
     {{atom.name}}, {{atom.price}}, {{atom.category}} 
 </div>`
 })
