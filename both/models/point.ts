@@ -1,15 +1,23 @@
 import ObjectID = Mongo.ObjectID;
 import { Address } from "./address";
 
-export class Point {
+export interface Point {
   _id?: ObjectID;
   name: string;
   companyId: ObjectID;
   geoLocation: {lat: number, lng: number};
   address?: Address;
   phone: string;
+}
 
-  constructor() {
-    this.companyId = (<any>Meteor.user()).companyId;
+export namespace Point {
+  export function init(companyId?: ObjectID) {
+    return {
+      name: undefined,
+      companyId: companyId,
+      geoLocation: {lat: undefined, lng: undefined},
+      address: new Address(),
+      phone: undefined
+    };
   }
 }
