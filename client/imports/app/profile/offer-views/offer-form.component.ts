@@ -120,6 +120,7 @@ export class OfferFormComponent implements  OnDestroy, OnChanges {
 
   ngOnChanges() {
     this.selectedPoints = new Set(this.offer.pointIds);
+    this.editable = !this.offer._id;
   }
 
   ngOnDestroy() {
