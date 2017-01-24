@@ -48,6 +48,8 @@ export class PointFormComponent implements OnInit {
   @Input()
   private point: Point;
 
+  private editable = false;
+
   // TODO: get default lat-lng from device
   centerLat: number = 56.9711614;
   centerLng: number = 23.8500817;
@@ -55,11 +57,7 @@ export class PointFormComponent implements OnInit {
   constructor(private router: Router){}
 
   ngOnInit(): void {
-    if (!this.point) {
-      this.point = new Point();
-      this.point.address = new Address();
-      this.point.geoLocation = {lat: undefined, lng: undefined};
-    }
+    this.editable = !this.point._id;
     console.log("LOADED POINT", this.point);
   }
 

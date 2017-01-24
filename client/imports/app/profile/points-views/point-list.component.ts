@@ -13,17 +13,16 @@ import ObjectID = Mongo.ObjectID;
   template: `
 
 <div class="row">
-  <div class="col s12 m6 l6">
+  <div class="col s12 m3 l3">
     <ul>
-        <li *ngFor="let point of points | async">
+        <li *ngFor="let point of points | async" (click)="editPoint(point)">
             {{point.name}} 
-            <button type="button" (click)="editPoint(point)">edit</button>
             <button type="button" (click)="deletePoint(point)">delete</button>
         </li>
     </ul>
-    <a (click)="goToNewPoint()" href="javascript:void(0)">add new point</a>
+    <a (click)="addNewPoint()" href="javascript:void(0)">add new point</a>
   </div>
-  <div *ngIf="selectedPoint" class="col s12 m6 l6">
+  <div *ngIf="selectedPoint" class="col s12 m9 l9">
     <point-form [point]="selectedPoint"></point-form>
   </div>
 </div>
@@ -42,8 +41,8 @@ export class PointListComponent implements OnDestroy {
     this.points = PointCollection.find({}).zone();
   }
 
-  private goToNewPoint(): void {
-    this.router.navigate([profileRoutes.moduleRoot.path, profileRoutes.toNewPoint.path]);
+  private addNewPoint(): void {
+    this.selectedPoint = Point.init((<UserData>Meteor.user()).companyId);
   }
 
   ngOnDestroy(): void {

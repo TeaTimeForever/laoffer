@@ -70,7 +70,7 @@ import ObjectID = Mongo.ObjectID;
 export class OfferFormComponent implements  OnDestroy, OnChanges {
 
   private points;
-  private editable = false;
+  private editable;
 
   @Input()
   private offer: Offer;
