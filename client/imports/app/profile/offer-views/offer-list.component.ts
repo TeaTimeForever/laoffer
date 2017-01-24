@@ -11,7 +11,7 @@ import ObjectID = Mongo.ObjectID;
   template: `
 
 <div class="row">
-  <div class="col s12 m6 l6">
+  <div class="col s12 m3 l3">
     <ul>
         <li *ngFor="let offer of offers | async" (click)="editOffer(offer)">
             {{offer.name}} {{offer.price}} 
@@ -20,7 +20,7 @@ import ObjectID = Mongo.ObjectID;
     </ul>
     <a (click)="addNewOffer()" href="javascript:void(0)">add new offer</a>
   </div>
-  <div *ngIf="selectedOffer" class="col s12 m6 l6">
+  <div *ngIf="selectedOffer" class="col s12 m9 l9">
     <offer-form [offer]="selectedOffer"></offer-form>
   </div>
 </div>
