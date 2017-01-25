@@ -12,25 +12,49 @@ import ObjectID = Mongo.ObjectID;
   template: `
     <h3>Please add info about your new point</h3>
     <form (submit)="savePoint()">
-        <address-fieldset [address]="point.address"></address-fieldset>
+      <address-fieldset [address]="point.address"></address-fieldset>
+<div class="row">
+  <div class="col s6">
+    <div class="row">
+      <div class="col s6">
+        <label for="phone">Phone</label>
         <input [(ngModel)]="point.phone"
-               type="text"
-               name="phone"
-               placeholder="phone" /><br>
-               
+                   type="text"
+                   name="phone"
+                   placeholder="phone"
+                   [disabled]="!editable"
+                    />
+      </div>
+      <div class="col s6">
+        <label for="name">Name</label>
         <input [(ngModel)]="point.name"
                type="text"
                name="name"
-               placeholder="name" /><br>
+               placeholder="name" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col m12 s6 l6">
+        <label for="lat">Latitude</label>
         <input [(ngModel)]="point.geoLocation.lat"
                type="number"
                name="lat"
-               placeholder="lat" />
+               placeholder="lat" 
+               [disabled]="!editable"/>
+      </div>
+      
+      <div class="col m12 s6 l6">
+        <label for="lng">Longitude</label>
         <input [(ngModel)]="point.geoLocation.lng"
                type="number"
                name="lng"
-               placeholder="lng" />
-        <sebm-google-map [latitude]="centerLat"
+               placeholder="lng"
+               [disabled]="!editable"/>
+      </div>
+    </div>
+  </div>
+  <div class="col s6">
+    <sebm-google-map [latitude]="centerLat"
                          [longitude]="centerLng"
                          [zoom]="8"
                          (mapClick)="initPointLocation($event)"
@@ -39,6 +63,11 @@ import ObjectID = Mongo.ObjectID;
                 [latitude]="point.geoLocation.lat"
                 [longitude]="point.geoLocation.lng"></sebm-google-map-marker>
         </sebm-google-map>
+  </div>
+</div>
+       
+        
+        
     </form>
     <button (click)="savePoint()" >save</button>
     <button (click)="goToProfile()" >go back</button>
@@ -48,7 +77,7 @@ export class PointFormComponent implements OnInit {
   @Input()
   private point: Point;
 
-  private editable = false;
+  private editable;
 
   // TODO: get default lat-lng from device
   centerLat: number = 56.9711614;

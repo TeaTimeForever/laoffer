@@ -32,8 +32,9 @@ import ObjectID = Mongo.ObjectID;
              type="text" 
              placeholder="some name"
              name="name"
-             [disabled]="!editable"></div>
-             </div>
+             [disabled]="!editable">
+    </div>
+  </div>
   <div class="row">
     <div class="col s6">
       <label for="price">Price</label>
