@@ -17,7 +17,7 @@ export function publishCollections() {
 
   Meteor.publish(
     "company-points",
-    (companyId: ObjectID) => PointCollection.find({companyId: companyId}, {})
+    (companyId: ObjectID) => PointCollection.find({companyId: companyId, deleted: {$ne: true}}, {})
   );
 
   Meteor.publish(
@@ -31,7 +31,9 @@ export function publishCollections() {
 
   Meteor.methods({
     "points.remove" (pointId: ObjectID) {
-      PointCollection.remove({_id: pointId});
+      PointCollection.update(pointId, {$set: {
+        deleted: true
+      }});
     },
 
     "offer.remove" (offerId: ObjectID) {

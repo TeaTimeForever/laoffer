@@ -8,6 +8,7 @@ export interface Point {
   geoLocation: {lat: number, lng: number};
   address?: Address;
   phone: string;
+  deleted?: boolean;
 }
 
 export namespace Point {

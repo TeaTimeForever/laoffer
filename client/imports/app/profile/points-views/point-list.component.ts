@@ -34,7 +34,7 @@ export class PointListComponent implements OnDestroy {
   private pointSubscription: Subscription;
   private selectedPoint;
 
-  constructor(private router: Router){
+  constructor() {
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", (<UserData>Meteor.user()).companyId)
       .subscribe();
