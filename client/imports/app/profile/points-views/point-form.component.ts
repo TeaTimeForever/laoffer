@@ -6,7 +6,7 @@ import ObjectID = Mongo.ObjectID;
 @Component({
   selector: "point-form",
   template: `
-<h3>Please add info about your new point</h3>
+<h3>Prepare point</h3>
 <form (submit)="savePoint()">
   <div class="row">
     <div class="col s6">
