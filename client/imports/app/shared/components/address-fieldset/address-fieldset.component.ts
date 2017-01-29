@@ -50,6 +50,25 @@ import { Address } from "../../../../../../both/models/address";
            [disabled]="!editable">
   </div>
 </div>
+<div class="row">
+  <div class="col m12 s6 l6">
+    <label for="lat">Latitude</label>
+    <input [(ngModel)]="address.latitude"
+           type="number"
+           name="lat"
+           placeholder="latitude"
+           [disabled]="!editable"/>
+  </div>
+
+  <div class="col m12 s6 l6">
+    <label for="lng">Longitude</label>
+    <input [(ngModel)]="address.longitude"
+           type="number"
+           name="lng"
+           placeholder="longitude"
+           [disabled]="!editable"/>
+  </div>
+</div>
 `
 })
 export class AddressFieldsetComponent {

@@ -33,25 +33,7 @@ import ObjectID = Mongo.ObjectID;
                placeholder="name" />
       </div>
     </div>
-    <div class="row">
-      <div class="col m12 s6 l6">
-        <label for="lat">Latitude</label>
-        <input [(ngModel)]="point.geoLocation.lat"
-               type="number"
-               name="lat"
-               placeholder="lat" 
-               [disabled]="!editable"/>
-      </div>
-      
-      <div class="col m12 s6 l6">
-        <label for="lng">Longitude</label>
-        <input [(ngModel)]="point.geoLocation.lng"
-               type="number"
-               name="lng"
-               placeholder="lng"
-               [disabled]="!editable"/>
-      </div>
-    </div>
+    
   </div>
   <div class="col s6">
     <sebm-google-map [latitude]="centerLat"
