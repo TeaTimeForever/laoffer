@@ -16,7 +16,7 @@ export namespace Point {
       name: undefined,
       companyId: companyId,
       geoLocation: {lat: undefined, lng: undefined},
-      address: new Address(),
+      address: Address.init(),
       phone: undefined
     };
   }

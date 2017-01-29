@@ -1,6 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Router } from "@angular/router";
-import { Point } from "../../../../../../both/models/point";
+import { Component, Input } from "@angular/core";
 import { Address } from "../../../../../../both/models/address";
 
 @Component({
