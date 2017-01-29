@@ -10,29 +10,27 @@ import ObjectID = Mongo.ObjectID;
   template: `
 <h3>Please add info about your new point</h3>
 <form (submit)="savePoint()">
-  <address-fieldset [address]="point.address"></address-fieldset>
   <div class="row">
     <div class="col s6">
-      <div class="row">
-        <div class="col s6">
-          <label for="phone">Phone</label>
-          <input [(ngModel)]="point.phone"
-                     type="text"
-                     name="phone"
-                     placeholder="phone"
-                     [disabled]="!editable"
-                      />
-        </div>
-        <div class="col s6">
-          <label for="name">Name</label>
-          <input [(ngModel)]="point.name"
+      <label for="name">Name</label>
+      <input [(ngModel)]="point.name"
+             type="text"
+             name="name"
+             placeholder="name" />
+    </div>
+    <div class="col s6">
+      <label for="phone">Phone</label>
+      <input [(ngModel)]="point.phone"
                  type="text"
-                 name="name"
-                 placeholder="name" />
-        </div>
-      </div>
+                 name="phone"
+                 placeholder="phone"
+                 [disabled]="!editable"
+                  />
     </div>
   </div>
+  <address-fieldset [address]="point.address"></address-fieldset>
+  
+    
 
   <button (click)="savePoint()" >save</button>
   <button (click)="goToProfile()" >go back</button>
