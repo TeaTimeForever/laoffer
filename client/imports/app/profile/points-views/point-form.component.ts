@@ -77,11 +77,6 @@ export class PointFormComponent implements OnInit {
       } else {
         PointCollection.insert(this.point);
       }
-      this.goToProfile();
     }
-  }
-
-  goToProfile() {
-    this.router.navigateByUrl(profileRoutes.moduleRoot.path);
   }
 }
