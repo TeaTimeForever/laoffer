@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { Point } from "../../../../../both/models/point";
 import { PointCollection } from "../../../../../both/collections/point.collection";
-import { profileRoutes } from "../user-profile.routes";
 import ObjectID = Mongo.ObjectID;
 
 @Component({
@@ -29,8 +27,6 @@ import ObjectID = Mongo.ObjectID;
     </div>
   </div>
   <address-fieldset [address]="point.address" [editable]="editable"></address-fieldset>
-
-
 
   <button class="waves-effect waves-light btn"
           *ngIf="editable"
@@ -63,8 +59,6 @@ export class PointFormComponent implements OnInit {
     if (!Meteor.userId()) {
       alert("please login");
     } else {
-      console.log("POINT ON SUBMIT", this.point);
-
       // TODO: use upsert instead of this shit
       if (this.point._id) {
         PointCollection.update(this.point._id, {$set: {
