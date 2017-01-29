@@ -48,8 +48,6 @@ export class PointFormComponent implements OnInit {
 
   private editable;
 
-  constructor(private router: Router) {}
-
   ngOnInit(): void {
     this.editable = !this.point._id;
     console.log("LOADED POINT", this.point);
