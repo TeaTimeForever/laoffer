@@ -52,7 +52,7 @@ import { MouseEvent } from "angular2-google-maps/core";
       <div class="col m12 s6 l6">
         <label for="lat">Latitude</label>
         <input [(ngModel)]="address.latitude"
-               type="number"
+               type="text"
                name="lat"
                [disabled]="!editable"/>
       </div>
@@ -60,7 +60,7 @@ import { MouseEvent } from "angular2-google-maps/core";
       <div class="col m12 s6 l6">
         <label for="lng">Longitude</label>
         <input [(ngModel)]="address.longitude"
-               type="number"
+               type="text"
                name="lng"
                [disabled]="!editable"/>
       </div>
@@ -84,6 +84,9 @@ import { MouseEvent } from "angular2-google-maps/core";
 export class AddressFieldsetComponent {
   @Input()
   private address: Address;
+
+  @Input()
+  private editable: boolean;
 
   // TODO: get default lat-lng from device
   centerLat: number = 56.9711614;

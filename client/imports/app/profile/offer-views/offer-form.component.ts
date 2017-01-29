@@ -56,12 +56,11 @@ import ObjectID = Mongo.ObjectID;
   <br>
   <button class="waves-effect waves-light btn" 
           *ngIf="editable" 
-          type="submit">save</button>
+          type="submit">Save</button>
   <button *ngIf="!editable" 
           type="button" 
           (click)="editOffer()"
-          class="waves-effect waves-light btn">Edit
-  </button>
+          class="waves-effect waves-light btn">Edit</button>
   
 </form>
 

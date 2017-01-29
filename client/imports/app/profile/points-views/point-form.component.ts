@@ -16,7 +16,8 @@ import ObjectID = Mongo.ObjectID;
       <input [(ngModel)]="point.name"
              type="text"
              name="name"
-             placeholder="name" />
+             placeholder="name"
+             [disabled]="!editable"/>
     </div>
     <div class="col s6">
       <label for="phone">Phone</label>
@@ -24,16 +25,20 @@ import ObjectID = Mongo.ObjectID;
                  type="text"
                  name="phone"
                  placeholder="phone"
-                 [disabled]="!editable"
-                  />
+                 [disabled]="!editable"/>
     </div>
   </div>
-  <address-fieldset [address]="point.address"></address-fieldset>
-  
-    
+  <address-fieldset [address]="point.address" [editable]="editable"></address-fieldset>
 
-  <button (click)="savePoint()" >save</button>
-  <button (click)="goToProfile()" >go back</button>
+
+
+  <button class="waves-effect waves-light btn"
+          *ngIf="editable"
+          type="submit">Save</button>
+  <button *ngIf="!editable"
+          type="button"
+          (click)="editPoint()"
+          class="waves-effect waves-light btn">Edit</button>
 </form>
 `
 })
@@ -50,7 +55,12 @@ export class PointFormComponent implements OnInit {
     console.log("LOADED POINT", this.point);
   }
 
+  private editPoint() {
+    this.editable = true;
+  }
+
   savePoint(): void {
+    this.editable = false;
     console.log("submit processing");
     if (!Meteor.userId()) {
       alert("please login");
