@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnChanges } from "@angular/core";
 import { Point } from "../../../../../both/models/point";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import ObjectID = Mongo.ObjectID;
@@ -16,7 +16,6 @@ import ObjectID = Mongo.ObjectID;
       <input [(ngModel)]="point.name"
              type="text"
              name="name"
-             placeholder="name"
              [disabled]="!editable"/>
     </div>
     <div class="col s6">
@@ -24,7 +23,6 @@ import ObjectID = Mongo.ObjectID;
       <input [(ngModel)]="point.phone"
                  type="text"
                  name="phone"
-                 placeholder="phone"
                  [disabled]="!editable"/>
     </div>
   </div>
@@ -37,22 +35,21 @@ import ObjectID = Mongo.ObjectID;
           type="button"
           (click)="editPoint()"
           class="waves-effect waves-light btn">Edit</button>
-  <button *ngIf="!editable"
+  <button *ngIf="!editable && point._id"
           type="button" 
           (click)="deletePoint(point)"
           class="red darken-1 waves-effect waves-light btn">Delete</button>
 </form>
 `
 })
-export class PointFormComponent implements OnInit {
+export class PointFormComponent implements OnChanges {
   @Input()
   private point: Point;
 
   private editable;
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.editable = !this.point._id;
-    console.log("LOADED POINT", this.point);
   }
 
   private editPoint() {

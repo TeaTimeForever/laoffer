@@ -70,7 +70,7 @@ import { MouseEvent } from "angular2-google-maps/core";
   <div class="col s12 m6 l6">
     <sebm-google-map [latitude]="centerLat"
                      [longitude]="centerLng"
-                     [zoom]="8"
+                     [zoom]="14"
                      (mapClick)="initPointLocation($event)"
                      style="width: 500px; height: 400px;">
       <sebm-google-map-marker *ngIf="address.latitude && address.longitude"
@@ -89,11 +89,13 @@ export class AddressFieldsetComponent {
   private editable: boolean;
 
   // TODO: get default lat-lng from device
-  centerLat: number = 56.9711614;
-  centerLng: number = 23.8500817;
+  centerLat: number = 56.94355212218225;
+  centerLng: number = 24.098618030548096;
 
   initPointLocation($event: MouseEvent) {
-    this.address.longitude = $event.coords.lng;
-    this.address.latitude  = $event.coords.lat;
+    if (this.editable) {
+      this.address.longitude = $event.coords.lng;
+      this.address.latitude  = $event.coords.lat;
+    }
   }
 }

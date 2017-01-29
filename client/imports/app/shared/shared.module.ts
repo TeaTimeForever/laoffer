@@ -21,7 +21,8 @@ import { MaterializeDirective } from "angular2-materialize";
     CommonModule,
     FormsModule,
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA"
+      apiKey: "AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA",
+      libraries: ["places"]
     })
   ]
 })
