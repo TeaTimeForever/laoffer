@@ -6,7 +6,9 @@ import ObjectID = Mongo.ObjectID;
 @Component({
   selector: "point-form",
   template: `
-<h3>Prepare point</h3>
+<h3 *ngIf="!point._id">Prepare new point</h3>
+<h3 *ngIf="point._id && editable">Edit {{point.name}}</h3>
+<h3 *ngIf="point._id && !editable">{{point.name}}</h3>
 <form (submit)="savePoint()">
   <div class="row">
     <div class="col s6">
@@ -35,6 +37,10 @@ import ObjectID = Mongo.ObjectID;
           type="button"
           (click)="editPoint()"
           class="waves-effect waves-light btn">Edit</button>
+  <button *ngIf="!editable"
+          type="button" 
+          (click)="deletePoint(point)"
+          class="red darken-1 waves-effect waves-light btn">Delete</button>
 </form>
 `
 })
@@ -51,6 +57,10 @@ export class PointFormComponent implements OnInit {
 
   private editPoint() {
     this.editable = true;
+  }
+
+  private deletePoint(point: Point) {
+    Meteor.call("points.remove", point._id);
   }
 
   savePoint(): void {

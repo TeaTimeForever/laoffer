@@ -14,13 +14,17 @@ import ObjectID = Mongo.ObjectID;
 
 <div class="row">
   <div class="col s12 m3 l3">
-    <ul>
-        <li *ngFor="let point of points | async" (click)="editPoint(point)">
-            {{point.name}} 
-            <button type="button" (click)="deletePoint(point)">delete</button>
-        </li>
+    <ul class="collection">
+      <li *ngFor="let point of points | async" 
+          (click)="editPoint(point)" 
+          class="collection-item" 
+          [ngClass]="{'active': selectedPoint && selectedPoint._id === point._id}">
+          {{point.name}}
+      </li>
+      <li class="collection-item" (click)="addNewPoint()">
+        <a href="javascript:void(0)">Add new point</a>
+      </li>
     </ul>
-    <a (click)="addNewPoint()" href="javascript:void(0)">add new point</a>
   </div>
   <div *ngIf="selectedPoint" class="col s12 m9 l9">
     <point-form [point]="selectedPoint"></point-form>
@@ -47,10 +51,6 @@ export class PointListComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.pointSubscription.unsubscribe();
-  }
-
-  private deletePoint(point: Point) {
-    Meteor.call("points.remove", point._id);
   }
 
   editPoint(point: Point) {
