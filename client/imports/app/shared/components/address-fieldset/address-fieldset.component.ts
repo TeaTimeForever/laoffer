@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { Address } from "../../../../../../both/models/address";
+import { MouseEvent } from "angular2-google-maps/core";
 
 @Component({
   selector: "address-fieldset",
@@ -9,7 +10,6 @@ import { Address } from "../../../../../../both/models/address";
     <label for="country">Country</label>
     <input [(ngModel)]="address.country" 
            type="text"
-           placeholder="country"
            name="country"
            [disabled]="!editable" />
   </div>
@@ -17,7 +17,6 @@ import { Address } from "../../../../../../both/models/address";
     <label for="city">City</label>
     <input [(ngModel)]="address.city" 
          type="text"
-         placeholder="city"
          name="city"
          [disabled]="!editable" >
   </div>
@@ -27,7 +26,6 @@ import { Address } from "../../../../../../both/models/address";
     <label for="state">State</label>
     <input [(ngModel)]="address.state" 
            type="text"
-           placeholder="state"
            name="state"
            [disabled]="!editable" >
   </div>
@@ -35,7 +33,6 @@ import { Address } from "../../../../../../both/models/address";
     <label for="city">City</label>
     <input [(ngModel)]="address.zip" 
            type="text"
-           placeholder="zip"
            name="zip"
            [disabled]="!editable">
   </div>
@@ -45,28 +42,36 @@ import { Address } from "../../../../../../both/models/address";
     <label for="street">Street</label>
     <input [(ngModel)]="address.street" 
            type="text"
-           placeholder="street"
            name="street"
            [disabled]="!editable">
   </div>
 </div>
 <div class="row">
-  <div class="col m12 s6 l6">
+  <div class="col m12 s3 l3">
     <label for="lat">Latitude</label>
     <input [(ngModel)]="address.latitude"
            type="number"
            name="lat"
-           placeholder="latitude"
            [disabled]="!editable"/>
   </div>
 
-  <div class="col m12 s6 l6">
+  <div class="col m12 s3 l3">
     <label for="lng">Longitude</label>
     <input [(ngModel)]="address.longitude"
            type="number"
            name="lng"
-           placeholder="longitude"
            [disabled]="!editable"/>
+  </div>
+  <div class="col s6">
+    <sebm-google-map [latitude]="centerLat"
+                     [longitude]="centerLng"
+                     [zoom]="8"
+                     (mapClick)="initPointLocation($event)"
+                     style="width: 500px; height: 500px;">
+      <sebm-google-map-marker *ngIf="address.latitude && address.longitude"
+                              [latitude]="address.latitude"
+                              [longitude]="address.longitude"></sebm-google-map-marker>
+    </sebm-google-map>
   </div>
 </div>
 `
@@ -74,4 +79,13 @@ import { Address } from "../../../../../../both/models/address";
 export class AddressFieldsetComponent {
   @Input()
   private address: Address;
+
+  // TODO: get default lat-lng from device
+  centerLat: number = 56.9711614;
+  centerLng: number = 23.8500817;
+
+  initPointLocation($event: MouseEvent) {
+    this.address.longitude = $event.coords.lng;
+    this.address.latitude  = $event.coords.lat;
+  }
 }
