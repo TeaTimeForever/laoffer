@@ -21,12 +21,7 @@ export function publishCollections() {
   );
 
   Meteor.publish(
-    "all-offers",
-    () => OfferCollection.find()
-  );
-
-  Meteor.publish(
-    "points", () => PointCollection.find({})
+    "points", () => PointCollection.find({deleted: {$ne: true}})
   );
 
   Meteor.methods({
@@ -46,7 +41,7 @@ export function publishCollections() {
   );
 
   Meteor.publish(
-    "point-offers",
+    "point-details",
     (pointId: ObjectID) => OfferCollection.find({pointIds: { $in: [ pointId.valueOf()]}}, {})
   );
 

@@ -8,8 +8,9 @@ import { preparedAppRoutes } from "./app.routes";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { SharedModule } from "./shared/shared.module";
 import { HomeComponent } from "./home/home.component";
-import { PointOffersComponent } from "./home/point-offers.component";
+import { PointDetailsComponent } from "./home/point-details.component";
 import { AtomPreviewComponent } from "./home/atom-preview.component";
+import { AvailableOffersComponent } from "./home/available-offers.component";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AtomPreviewComponent } from "./home/atom-preview.component";
     HeaderComponent,
     HomeComponent,
     AtomPreviewComponent,
-    PointOffersComponent
+    PointDetailsComponent,
+    AvailableOffersComponent
   ],
   entryComponents: [
     AppComponent
