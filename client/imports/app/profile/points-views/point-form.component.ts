@@ -1,9 +1,9 @@
-import { Component, Input, OnChanges, OnDestroy } from "@angular/core";
+import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
 import { Point } from "../../../../../both/models/point";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { MeteorObservable } from "meteor-rxjs";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { Offer } from "../../../../../both/models/offer";
 import ObjectID = Mongo.ObjectID;
 
@@ -31,8 +31,16 @@ import ObjectID = Mongo.ObjectID;
     </div>
   </div>
   <address-fieldset [address]="point.address" [editable]="editable"></address-fieldset>
-  <ul>
-  <li *ngFor="let o of offers | async">{{o.name}}</li>
+  <ul class="collection" *ngIf="point._id">
+    <li class="collection-item avatar" *ngFor="let offer of offers | async">
+      <i class="material-icons circle">restaurant</i>
+      <a [routerLink]="'offers'"><span class="title">{{offer.name}}</span></a>
+      <p>
+        <span *ngFor="let atom of offer.molecule.atoms">{{atom.name}} </span>
+        <span *ngFor="let category of offer.molecule.categories">{{category}} </span>
+      </p>
+      <a href="#!" class="secondary-content">{{offer.price}}</a>
+    </li>
   </ul>
 
   <button class="waves-effect waves-light btn"
@@ -50,29 +58,31 @@ import ObjectID = Mongo.ObjectID;
 `
 })
 export class PointFormComponent implements OnChanges, OnDestroy {
+
   @Input()
   private point: Point;
 
   private editable;
 
-  private offerSubscription;
+  private offerSubscription: Subscription;
   private offers: Observable<Offer[]>;
 
-  constructor () {
+
+  ngOnChanges(): void {
+    if (this.offerSubscription) {
+      this.offerSubscription.unsubscribe();
+    }
     this.offerSubscription = MeteorObservable
       .subscribe("point-offers", this.point._id)
       .subscribe();
     this.offers = OfferCollection.find({});
+
+    this.editable = !this.point._id;
   }
 
   ngOnDestroy(): void {
     this.offerSubscription.unsubscribe();
   }
-
-  ngOnChanges(): void {
-    this.editable = !this.point._id;
-  }
-
 
   private editPoint() {
     this.editable = true;
