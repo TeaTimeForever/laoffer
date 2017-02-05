@@ -1,6 +1,10 @@
-import { Component, Input, OnChanges } from "@angular/core";
+import { Component, Input, OnChanges, OnDestroy } from "@angular/core";
 import { Point } from "../../../../../both/models/point";
 import { PointCollection } from "../../../../../both/collections/point.collection";
+import { MeteorObservable } from "meteor-rxjs";
+import { OfferCollection } from "../../../../../both/collections/offer.collection";
+import { Observable } from "rxjs";
+import { Offer } from "../../../../../both/models/offer";
 import ObjectID = Mongo.ObjectID;
 
 @Component({
@@ -27,6 +31,9 @@ import ObjectID = Mongo.ObjectID;
     </div>
   </div>
   <address-fieldset [address]="point.address" [editable]="editable"></address-fieldset>
+  <ul>
+  <li *ngFor="let o of offers | async">{{o.name}}</li>
+  </ul>
 
   <button class="waves-effect waves-light btn"
           *ngIf="editable"
@@ -42,15 +49,30 @@ import ObjectID = Mongo.ObjectID;
 </form>
 `
 })
-export class PointFormComponent implements OnChanges {
+export class PointFormComponent implements OnChanges, OnDestroy {
   @Input()
   private point: Point;
 
   private editable;
 
+  private offerSubscription;
+  private offers: Observable<Offer[]>;
+
+  constructor () {
+    this.offerSubscription = MeteorObservable
+      .subscribe("point-offers", this.point._id)
+      .subscribe();
+    this.offers = OfferCollection.find({});
+  }
+
+  ngOnDestroy(): void {
+    this.offerSubscription.unsubscribe();
+  }
+
   ngOnChanges(): void {
     this.editable = !this.point._id;
   }
+
 
   private editPoint() {
     this.editable = true;

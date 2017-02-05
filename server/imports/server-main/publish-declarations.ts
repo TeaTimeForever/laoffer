@@ -41,8 +41,8 @@ export function publishCollections() {
   );
 
   Meteor.publish(
-    "point-details",
-    (pointId: ObjectID) => OfferCollection.find({pointIds: { $in: [ pointId.valueOf()]}}, {})
+    "point-offers",
+    (pointId: ObjectID) => OfferCollection.find({pointIds: { $in: [ pointId]}}, {})
   );
 
   /* // Example how to do reactive related publications
