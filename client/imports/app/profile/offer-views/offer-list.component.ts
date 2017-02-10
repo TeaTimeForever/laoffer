@@ -60,7 +60,6 @@ export class OfferListComponent implements OnDestroy {
   }
 
   adjustSelected($event) {
-    debugger;
     if ($event.deleted) {
       this.selectedOffer = undefined;
     }
