@@ -1,7 +1,5 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Subscription } from "rxjs/Subscription";
-import { profileRoutes } from "../user-profile.routes";
-import { Router } from "@angular/router";
 import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
@@ -27,7 +25,7 @@ import ObjectID = Mongo.ObjectID;
     </ul>
   </div>
   <div *ngIf="selectedPoint" class="col s12 m9 l9">
-    <point-form [point]="selectedPoint"></point-form>
+    <point-form (onPointChanged)="adjustSelected($event)" [point]="selectedPoint"></point-form>
   </div>
 </div>
 `
@@ -43,6 +41,17 @@ export class PointListComponent implements OnDestroy {
       .subscribe("company-points", (<UserData>Meteor.user()).companyId)
       .subscribe();
     this.points = PointCollection.find({}).zone();
+  }
+
+  adjustSelected($event) {
+    debugger;
+    if ($event.deleted) {
+      this.selectedPoint = undefined;
+    }
+
+    if ($event.created) {
+      Object.assign(this.selectedPoint, {_id: $event.pointId});
+    }
   }
 
   private addNewPoint(): void {

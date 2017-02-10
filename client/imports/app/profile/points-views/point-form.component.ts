@@ -1,9 +1,9 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnDestroy, Output } from "@angular/core";
 import { Point } from "../../../../../both/models/point";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { MeteorObservable } from "meteor-rxjs";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subject, Subscription } from "rxjs";
 import { Offer } from "../../../../../both/models/offer";
 import ObjectID = Mongo.ObjectID;
 
@@ -62,11 +62,29 @@ export class PointFormComponent implements OnChanges, OnDestroy {
   @Input()
   private point: Point;
 
+  private pointChangedSubject = new Subject();
+
+  @Output()
+  onPointChanged;
+
   private editable;
 
   private offerSubscription: Subscription;
   private offers: Observable<Offer[]>;
 
+  constructor () {
+    this.onPointChanged = this.pointChangedSubject.asObservable();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe();
+  }
+
+  unsubscribe() {
+    if(this.offerSubscription) {
+      this.offerSubscription.unsubscribe();
+    }
+  }
 
   ngOnChanges(): void {
     if (this.offerSubscription) {
@@ -80,16 +98,17 @@ export class PointFormComponent implements OnChanges, OnDestroy {
     this.editable = !this.point._id;
   }
 
-  ngOnDestroy(): void {
-    this.offerSubscription.unsubscribe();
-  }
 
   private editPoint() {
     this.editable = true;
   }
 
   private deletePoint(point: Point) {
+    this.unsubscribe();
     Meteor.call("points.remove", point._id);
+    this.pointChangedSubject.next({
+      deleted: true
+    });
   }
 
   savePoint(): void {
@@ -106,7 +125,12 @@ export class PointFormComponent implements OnChanges, OnDestroy {
           phone: this.point.phone
         }});
       } else {
-        PointCollection.insert(this.point);
+        PointCollection.insert(this.point)
+                       .subscribe(n => this.pointChangedSubject.next({
+                         created: true,
+                         pointId: n
+                       }));
+
       }
     }
   }
