@@ -126,9 +126,9 @@ export class PointFormComponent implements OnChanges, OnDestroy {
         }});
       } else {
         PointCollection.insert(this.point)
-                       .subscribe(n => this.pointChangedSubject.next({
+                       .subscribe(newId => this.pointChangedSubject.next({
                          created: true,
-                         pointId: n
+                         pointId: newId
                        }));
 
       }

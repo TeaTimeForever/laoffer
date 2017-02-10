@@ -1,11 +1,11 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnDestroy, OnInit, Output } from "@angular/core";
 import { MeteorObservable, ObservableCursor } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
 import { Offer } from "../../../../../both/models/offer";
 import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import ObjectID = Mongo.ObjectID;
 
 @Component({
@@ -62,7 +62,10 @@ import ObjectID = Mongo.ObjectID;
           type="button" 
           (click)="editOffer()"
           class="waves-effect waves-light btn">Edit</button>
-  
+  <button *ngIf="!editable && offer._id" 
+          type="button" 
+          (click)="deleteOffer(offer)"
+          class="red darken-1 waves-effect waves-light btn">Delete</button>
 </form>
 
 <atom-form [companyId]="companyId"></atom-form>
@@ -76,6 +79,11 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
   @Input()
   private offer: Offer;
 
+  @Output()
+  private onOfferChanged;
+
+  private offerChangedSubject = new Subject();
+
   private pointSubscription: Subscription;
   private routeIdSubscription: Subscription;
   private companyId: Mongo.ObjectID;
@@ -83,6 +91,9 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
   private offerdb: ObservableCursor<Offer>;
 
   constructor(private route: ActivatedRoute) {
+
+    this.onOfferChanged = this.offerChangedSubject.asObservable();
+
     this.companyId = (<UserData>Meteor.user()).companyId;
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", this.companyId)
@@ -92,10 +103,10 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.routeIdSubscription = this.route.params.subscribe(params => {
+    /*this.routeIdSubscription = this.route.params.subscribe(params => {
       this.offerdb = OfferCollection.find(params["id"]);
       console.log(this.offerdb);
-    });
+    });*/
   }
 
   select(point, selected) {
@@ -104,6 +115,14 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
     } else {
       this.selectedPoints.delete(point._id);
     }
+  }
+
+  private deleteOffer(offer: Offer) {
+    this.unsubscribe();
+    Meteor.call("offer.remove", offer._id);
+    this.offerChangedSubject.next({
+      deleted: true
+    });
   }
 
   private editOffer() {
@@ -124,7 +143,13 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
         molecule: this.offer.molecule
       }});
     } else {
-      OfferCollection.insert(this.offer);
+      OfferCollection.insert(this.offer)
+        .subscribe(newId => {
+          this.offerChangedSubject.next({
+            created: true,
+            offerIf: newId
+          })
+        });
     }
   }
 
@@ -133,8 +158,17 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
     this.editable = !this.offer._id;
   }
 
+  unsubscribe() {
+    if (this.pointSubscription) {
+      this.pointSubscription.unsubscribe();
+    }
+
+    if (this.routeIdSubscription) {
+      this.routeIdSubscription.unsubscribe();
+    }
+  }
+
   ngOnDestroy() {
-    this.pointSubscription.unsubscribe();
-    this.routeIdSubscription.unsubscribe();
+    this.unsubscribe();
   }
 }

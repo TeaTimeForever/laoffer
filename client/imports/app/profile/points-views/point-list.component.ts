@@ -44,7 +44,6 @@ export class PointListComponent implements OnDestroy {
   }
 
   adjustSelected($event) {
-    debugger;
     if ($event.deleted) {
       this.selectedPoint = undefined;
     }
