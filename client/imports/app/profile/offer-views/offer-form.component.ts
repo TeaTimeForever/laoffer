@@ -54,7 +54,7 @@ import ObjectID = Mongo.ObjectID;
              name="whenActive"
              [disabled]="!editable"></div>
   </div>
-  <molecule-builder *ngIf="editable" [molecule]="offer.molecule"></molecule-builder>
+  <molecule-builder class="row" *ngIf="editable" [molecule]="offer.molecule"></molecule-builder>
   <molecule-preview *ngIf="!editable" [molecule]="offer.molecule"></molecule-preview>
   <br>
   <button class="waves-effect waves-light btn" 

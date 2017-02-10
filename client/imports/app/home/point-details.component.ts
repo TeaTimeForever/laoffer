@@ -1,9 +1,4 @@
-import { Component, OnDestroy, Input, OnChanges } from "@angular/core";
-import { MeteorObservable } from "meteor-rxjs";
-import { Subscription } from "rxjs/Subscription";
-import { OfferCollection } from "../../../../both/collections/offer.collection";
-import { Observable } from "rxjs";
-import { Offer } from "../../../../both/models/offer";
+import { Component, Input } from "@angular/core";
 import { Point } from "../../../../both/models/point";
 import ObjectID = Mongo.ObjectID;
 
