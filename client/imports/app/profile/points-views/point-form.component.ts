@@ -34,7 +34,7 @@ import ObjectID = Mongo.ObjectID;
   <ul class="collection" *ngIf="point._id">
     <li class="collection-item avatar" *ngFor="let offer of offers | async">
       <i class="material-icons circle">restaurant</i>
-      <a [routerLink]="'offers'"><span class="title">{{offer.name}}</span></a>
+      <a [routerLink]="'offers/' + offer._id"><span class="title">{{offer.name}}</span></a>
       <p>
         <span *ngFor="let atom of offer.molecule.atoms">{{atom.name}} </span>
         <span *ngFor="let category of offer.molecule.categories">{{category}} </span>
@@ -44,7 +44,7 @@ import ObjectID = Mongo.ObjectID;
   </ul>
 
   <button class="waves-effect waves-light btn"
-          *ngIf="editable"
+          *ngIf="editable"  
           type="submit">Save</button>
   <button *ngIf="!editable"
           type="button"

@@ -1,10 +1,11 @@
-import { Component, OnDestroy, Input, OnChanges } from "@angular/core";
-import { Subscription } from "rxjs/Subscription";
-import { MeteorObservable } from "meteor-rxjs";
+import { Component, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import { MeteorObservable, ObservableCursor } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
 import { Offer } from "../../../../../both/models/offer";
+import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 import ObjectID = Mongo.ObjectID;
 
 @Component({
@@ -67,7 +68,7 @@ import ObjectID = Mongo.ObjectID;
 <atom-form [companyId]="companyId"></atom-form>
 `
 })
-export class OfferFormComponent implements  OnDestroy, OnChanges {
+export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
 
   private points;
   private editable;
@@ -76,16 +77,25 @@ export class OfferFormComponent implements  OnDestroy, OnChanges {
   private offer: Offer;
 
   private pointSubscription: Subscription;
+  private routeIdSubscription: Subscription;
   private companyId: Mongo.ObjectID;
   private selectedPoints: Set<ObjectID>;
+  private offerdb: ObservableCursor<Offer>;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.companyId = (<UserData>Meteor.user()).companyId;
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", this.companyId)
       .subscribe();
 
     this.points = PointCollection.find({}).zone();
+  }
+
+  ngOnInit(): void {
+    this.routeIdSubscription = this.route.params.subscribe(params => {
+      this.offerdb = OfferCollection.find(params["id"]);
+      console.log(this.offerdb);
+    });
   }
 
   select(point, selected) {
@@ -125,5 +135,6 @@ export class OfferFormComponent implements  OnDestroy, OnChanges {
 
   ngOnDestroy() {
     this.pointSubscription.unsubscribe();
+    this.routeIdSubscription.unsubscribe();
   }
 }

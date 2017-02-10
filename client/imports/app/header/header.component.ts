@@ -7,7 +7,7 @@ import { Component } from "@angular/core";
   <nav>
     <login-buttons class="col s3"></login-buttons>
     <a class="col s3" href="/#/profile">profile</a>
-    <a class="col s3" href="/#/profile/offer-list">offers</a>
+    <a class="col s3" href="/#/profile/offers">offers</a>
   </nav>
 </div>
 `
