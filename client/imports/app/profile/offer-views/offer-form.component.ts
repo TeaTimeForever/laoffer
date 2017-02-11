@@ -1,10 +1,9 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, Output } from "@angular/core";
-import { MeteorObservable, ObservableCursor } from "meteor-rxjs";
+import { Component, Input, OnChanges, OnDestroy, Output } from "@angular/core";
+import { MeteorObservable } from "meteor-rxjs";
 import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { OfferCollection } from "../../../../../both/collections/offer.collection";
 import { Offer } from "../../../../../both/models/offer";
-import { ActivatedRoute } from "@angular/router";
 import { Subject, Subscription } from "rxjs";
 import ObjectID = Mongo.ObjectID;
 
@@ -24,7 +23,9 @@ import ObjectID = Mongo.ObjectID;
                [checked]="selectedPoints.has(point._id)"
                (change)="select(point, $event.target.checked)"
                [disabled]="!editable"/>
-        <label [attr.for]="'cb_' + point.name">{{point.name}} </label>
+        <label [attr.for]="'cb_' + point.name">
+          <a [routerLink]="'point/' + point._id">{{point.name}}</a> 
+        </label>
       </p>
     </div>
     <div class="col s6">
