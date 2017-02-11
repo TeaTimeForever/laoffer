@@ -11,20 +11,18 @@ import { Molecule } from "../../../../../both/models/molecule";
 
 @Component({
   selector: "molecule-builder",
-  template: `
-=<div class="molecule card teal"
-     style=" min-height: 100px; min-width: 100px;"
-     [dragula]='"atoms"'>
-  <atom-label *ngFor="let atom of molecule.atoms" [atom]="atom"></atom-label>
-  <category-label class="chip" *ngFor="let category of molecule.categories" [category]="category"></category-label>
-</div>
-
-<div class="choices card cyan"
-     style=" min-height: 100px; min-width: 100px;"
-     [dragula]='"atoms"'>
-    <atom-label *ngFor="let atom of atoms | async" 
-                [atom]="atom"></atom-label>
-    <category-label *ngFor="let category of categories" [category]="category"></category-label>
+  template: `    
+<div class="row molecule-builder">
+  <div class="molecule card teal col m6 l6" dragula="atoms">
+    <atom-label *ngFor="let atom of molecule.atoms" [atom]="atom"></atom-label>
+    <category-label class="chip" *ngFor="let category of molecule.categories" [category]="category"></category-label>
+  </div>
+  
+  <div class="choices card cyan col m6 l6" dragula="atoms">
+      <atom-label *ngFor="let atom of atoms | async" 
+                  [atom]="atom"></atom-label>
+      <category-label *ngFor="let category of categories" [category]="category"></category-label>
+  </div>
 </div>
 `
 })
