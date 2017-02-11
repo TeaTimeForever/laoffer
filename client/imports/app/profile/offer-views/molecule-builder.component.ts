@@ -47,7 +47,6 @@ export class MoleculeBuilderComponent implements OnChanges, OnDestroy {
       .subscribe(next => {
         let dropped: Atom | Category = JSON.parse(next[1].childNodes[0].dataset.item);
         let collection = (typeof dropped === "string") ? "categories" : "atoms";
-        console.log("1: source", this[collection], "molecule", this.molecule[collection]);
 
         if (next[2].className.includes("molecule")) {
           this.molecule[collection].push(dropped);
@@ -56,29 +55,7 @@ export class MoleculeBuilderComponent implements OnChanges, OnDestroy {
           this[collection].push(dropped);
           this.molecule[collection] = this.molecule[collection].filter(i => i !== dropped);
         }
-        console.log("2: source", this[collection], "molecule", this.molecule[collection]);
       });
-
-/*
-    this.dragSubscription = dragulaService.drop.subscribe(value => {
-      console.log(value);
-      if (value[1].localName.includes("atom-label") && (value[2].className !== value[3].className)) {
-        let droppedAtomId = value[1].childNodes[0].dataset.atomid;
-        if (value[2].className.includes("molecule")) {
-          this.molecule.atoms.push(AtomCollection.findOne({_id: droppedAtomId }));
-        } else {
-          this.molecule.atoms = this.molecule.atoms.filter((atom: any) => atom._id !== droppedAtomId);
-        }
-      } else if (value[1].localName.includes("category-label")) {
-        let droppedCategory = value[1].childNodes[0].dataset.category;
-        if (value[2].className.includes("molecule")) {
-          this.molecule.categories.push(droppedCategory);
-        } else {
-          this.molecule.categories = this.molecule.categories.filter(item => item !== droppedCategory);
-        }
-      }
-    });
-*/
   }
 
   ngOnChanges(changes): void {

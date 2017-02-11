@@ -125,6 +125,7 @@ export class OfferFormComponent implements  OnDestroy, OnChanges {
     this.editable = false;
     this.offer.pointIds = Array.from(this.selectedPoints);
     // TODO: use upsert instead of this shit
+
     if (this.offer._id) {
       OfferCollection.update(this.offer._id, {$set: {
         pointIds: this.offer.pointIds,
