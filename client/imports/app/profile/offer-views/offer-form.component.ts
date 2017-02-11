@@ -23,9 +23,8 @@ import ObjectID = Mongo.ObjectID;
                [checked]="selectedPoints.has(point._id)"
                (change)="select(point, $event.target.checked)"
                [disabled]="!editable"/>
-        <label [attr.for]="'cb_' + point.name">
-          <a [routerLink]="'point/' + point._id">{{point.name}}</a> 
-        </label>
+        <label [attr.for]="'cb_' + point.name">{{point.name}}</label>
+        <a [routerLink]="'../points/' + point._id">go to details</a>
       </p>
     </div>
     <div class="col s6">

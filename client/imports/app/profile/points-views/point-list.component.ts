@@ -5,6 +5,7 @@ import { UserData } from "../../../../../both/models/user-data";
 import { PointCollection } from "../../../../../both/collections/point.collection";
 import { Point } from "../../../../../both/models/point";
 import ObjectID = Mongo.ObjectID;
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "point-list",
@@ -36,7 +37,13 @@ export class PointListComponent implements OnDestroy {
   private pointSubscription: Subscription;
   private selectedPoint;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
+    this.route.params.subscribe((next: any) => {
+      if (next.id) {
+        this.selectedPoint = PointCollection.findOne(next.id);
+      }
+    });
+
     this.pointSubscription = MeteorObservable
       .subscribe("company-points", (<UserData>Meteor.user()).companyId)
       .subscribe();
