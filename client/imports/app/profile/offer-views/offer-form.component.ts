@@ -71,7 +71,7 @@ import ObjectID = Mongo.ObjectID;
 <atom-form [companyId]="companyId"></atom-form>
 `
 })
-export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
+export class OfferFormComponent implements  OnDestroy, OnChanges {
 
   private points;
   private editable;
@@ -88,9 +88,8 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
   private routeIdSubscription: Subscription;
   private companyId: Mongo.ObjectID;
   private selectedPoints: Set<ObjectID>;
-  private offerdb: ObservableCursor<Offer>;
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
 
     this.onOfferChanged = this.offerChangedSubject.asObservable();
 
@@ -100,13 +99,6 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
       .subscribe();
 
     this.points = PointCollection.find({}).zone();
-  }
-
-  ngOnInit(): void {
-    /*this.routeIdSubscription = this.route.params.subscribe(params => {
-      this.offerdb = OfferCollection.find(params["id"]);
-      console.log(this.offerdb);
-    });*/
   }
 
   select(point, selected) {
@@ -148,7 +140,7 @@ export class OfferFormComponent implements  OnDestroy, OnChanges, OnInit {
           this.offerChangedSubject.next({
             created: true,
             offerIf: newId
-          })
+          });
         });
     }
   }
