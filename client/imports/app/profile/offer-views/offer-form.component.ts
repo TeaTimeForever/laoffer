@@ -11,7 +11,9 @@ import ObjectID = Mongo.ObjectID;
   selector: "offer-form",
   template: `
 <form (ngSubmit)="saveOffer()">
-  <h4>Prepare offer</h4>
+  <h3 *ngIf="!offer._id">Prepare new offer</h3>
+  <h3 *ngIf="offer._id && editable">Edit {{offer.name}}</h3>
+  <h3 *ngIf="offer._id && !editable">{{offer.name}}</h3>
   
   <div class="row">
     <div class="col s6">
