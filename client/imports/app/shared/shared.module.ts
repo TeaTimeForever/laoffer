@@ -5,6 +5,7 @@ import { AccountsModule } from "angular2-meteor-accounts-ui";
 import { AddressFieldsetComponent } from "./components/address-fieldset/address-fieldset.component";
 import { AgmCoreModule } from "angular2-google-maps/core";
 import { MaterializeDirective } from "angular2-materialize";
+import {TimePickerComponent} from "angular2-timepicker/timepicker-component";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MaterializeDirective } from "angular2-materialize";
     AccountsModule,
     AddressFieldsetComponent,
     AgmCoreModule,
-    MaterializeDirective
+    MaterializeDirective,
+    TimePickerComponent
   ],
   imports: [
     CommonModule,

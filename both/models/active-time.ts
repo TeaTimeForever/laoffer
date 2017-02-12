@@ -6,11 +6,15 @@ export interface ActiveTime {
 }
 
 export namespace ActiveTime {
-  /*export function init(): ActiveTime {
+  export function init(): ActiveTime {
+    let dateAfterWeek = new Date;
+    dateAfterWeek.setDate(dateAfterWeek.getDate() + 7);
     return {
-
+      dateFrom: new Date(),
+      dateTo: dateAfterWeek,
+      weekdays: []
     };
-  }*/
+  }
 }
 
 
@@ -42,6 +46,11 @@ export namespace WeekdayName {
     sunday
   ];
 
+  export const weekends: WeekdayName[] = [
+    saturday,
+    sunday
+  ];
+
   export const workdays: WeekdayName[] = [
     monday,
     tuesday,
@@ -52,8 +61,7 @@ export namespace WeekdayName {
 }
 
 export type Weekday = {
-  [Day in WeekdayName] : {
-    timeFrom: Date;
-    timeTo: Date;
-  }
+  day: WeekdayName
+  timeFrom: Date;
+  timeTo: Date;
 }

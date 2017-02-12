@@ -11,6 +11,7 @@ import { HomeComponent } from "./home/home.component";
 import { PointDetailsComponent } from "./home/point-details.component";
 import { AtomPreviewComponent } from "./home/atom-preview.component";
 import { AvailableOffersComponent } from "./home/available-offers.component";
+import { ActiveTimeComponent } from "./profile/offer-views/active-time.component";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AvailableOffersComponent } from "./home/available-offers.component";
     HomeComponent,
     AtomPreviewComponent,
     PointDetailsComponent,
-    AvailableOffersComponent
+    AvailableOffersComponent,
+    ActiveTimeComponent
   ],
   entryComponents: [
     AppComponent

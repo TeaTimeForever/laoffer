@@ -31,6 +31,7 @@ import { Point } from "../../../../both/models/point";
     <div class="row" *ngIf="selectedPoint">
       <point-details [point]="selectedPoint"></point-details>
     </div>
+    <active-time></active-time>
   `
 })
 export class HomeComponent implements OnDestroy {

@@ -10,7 +10,7 @@ import ObjectID = Mongo.ObjectID;
 @Component({
   selector: "offer-form",
   template: `
-<form (ngSubmit)="saveOffer()">
+<form materialize (ngSubmit)="saveOffer()">
   <h3 *ngIf="!offer._id">Prepare new offer</h3>
   <h3 *ngIf="offer._id && editable">Edit {{offer.name}}</h3>
   <h3 *ngIf="offer._id && !editable">{{offer.name}}</h3>
