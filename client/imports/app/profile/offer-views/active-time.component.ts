@@ -51,9 +51,10 @@ active time
              placeholder="time from"
              class="timepicker col m3 l3"
              type="text" 
-             (change)="lala()"
-             [options]="{disableTextInput: false, 'timeFormat': 'h:i A', showDuration: false}"
+             
       />
+      <!--(change)="lala()"
+      [options]="{disableTextInput: false, 'timeFormat': 'h:i A', showDuration: false}"-->
       <input id="dateFrom"
              placeholder="time to"
              class="col m3 l3"
@@ -64,7 +65,8 @@ active time
         <div class="col m3 l3">
           <input type="checkbox"
                  [attr.id]="'cb_' + day"
-                 (change)="selectWeekday(day, $event.target.checked)">
+                 (change)="selectWeekday(day, $event.target.checked)"
+                 [checked]="isDaySelected(day)" >
           <label [attr.for]="'cb_' + day" >{{day}}</label>
         </div>
         <input id="dateFrom"
@@ -98,23 +100,32 @@ export class ActiveTimeComponent {
 
   setDefaulTime() {
     // TODO: implement me -- set default time
-    console.log("TODO set default time for all selected days")
+    console.log("TODO set default time for all selected days");
   }
 
   selectWorkays() {
     // TODO: implement me -- should select all work days
-    console.log("TODO select work days")
+    console.log("TODO select work days");
   }
 
-  selectAllDays() {
-    // TODO: implement me -- should select all days
-    console.log("TODO select all days")
+  selectAllDays(isSelected: boolean) {
+    if (isSelected) {
+      WeekdayName.values.map(day => {
+        if (!this.activeTime.weekdays.find(d => d.day === day)) {
+          this.activeTime.weekdays.push({
+            day: day,
+            timeFrom: new Date(),
+            timeTo: new Date()
+          });
+        }
+      });
+    }
   }
 
   isTimeSame() {
     // TODO: implement me -- should check
     // default time if all selected days have the same time
-    console.log()
+    console.log("TODO if time is same");
   }
 
   isWorkDaysChecked(): boolean {
@@ -126,6 +137,10 @@ export class ActiveTimeComponent {
     } else {
       return this.activeTime.weekdays.length === 5;
     }
+  }
+
+  isDaySelected(day: WeekdayName): boolean {
+    return !!this.activeTime.weekdays.find(d => d.day === day);
   }
 
   private selectWeekday(day: WeekdayName, isSelected) {

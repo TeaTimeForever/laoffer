@@ -16,6 +16,7 @@ import { AtomFormComponent } from "./atom-views/atom-form.component";
 import { CategoryLabelComponent } from "./atom-views/category-label.component";
 import { OfferListComponent } from "./offer-views/offer-list.component";
 import { MoleculePreviewComponent } from "./offer-views/molecule-preview.component";
+import { ActiveTimeComponent } from "./offer-views/active-time.component";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MoleculePreviewComponent } from "./offer-views/molecule-preview.compone
     AtomLabelComponent,
     CategoryLabelComponent,
     MoleculePreviewComponent
+    // ActiveTimeComponent
   ],
   exports: [ UserProfileComponent ],
   imports: [

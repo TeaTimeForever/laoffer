@@ -1,11 +1,11 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { AccountsModule } from "angular2-meteor-accounts-ui";
 import { AddressFieldsetComponent } from "./components/address-fieldset/address-fieldset.component";
 import { AgmCoreModule } from "angular2-google-maps/core";
 import { MaterializeDirective } from "angular2-materialize";
-import {TimePickerComponent} from "angular2-timepicker/timepicker-component";
+// import { TimePickerComponent } from "angular2-timepicker/timepicker-component";
 
 @NgModule({
   declarations: [
@@ -16,8 +16,8 @@ import {TimePickerComponent} from "angular2-timepicker/timepicker-component";
     AccountsModule,
     AddressFieldsetComponent,
     AgmCoreModule,
-    MaterializeDirective,
-    TimePickerComponent
+    MaterializeDirective/*,
+    TimePickerComponent*/
   ],
   imports: [
     CommonModule,

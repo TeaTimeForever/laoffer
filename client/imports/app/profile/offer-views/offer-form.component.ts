@@ -46,6 +46,7 @@ import ObjectID = Mongo.ObjectID;
              placeholder="1.00"
              name="price"
              [disabled]="!editable"></div>
+    <!--<active-time></active-time>-->
     <div class="col s6">
       <label for="whenActive">When active</label>
       <input [(ngModel)]="offer.whenActive" 
