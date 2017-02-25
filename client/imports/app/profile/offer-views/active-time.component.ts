@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActiveDay, OfferWorkTime } from "../../../../../both/models/active-time";
 import { Weekday } from "../../../../../both/models/weekday";
+import DaySet = Weekday.DaySet;
 
 @Component({
   selector: "active-time",
@@ -26,7 +27,7 @@ import { Weekday } from "../../../../../both/models/weekday";
           <div>
             <input type="checkbox"
                    [attr.id]="'cb_alldays'"
-                   [checked]="activeTime.weekdays.length === 7"
+                   [checked]="isAllDaysSelected()"
                    (change)="selectAllDays($event.target.checked)">
             <label [attr.for]="'cb_alldays'">All days</label>
           </div>
@@ -57,13 +58,15 @@ import { Weekday } from "../../../../../both/models/weekday";
             <div class="col m3 l3">
               <input type="checkbox"
                      [attr.id]="'cb_' + day"
-                     (change)="selectWeekday(day, $event.target.checked)"
+                     (change)="pickDay(day, $event.target.checked)"
                      [checked]="isDaySelected(day)">
               <label [attr.for]="'cb_' + day">{{day}}</label>
             </div>
-            <time-picker *ngIf="isDaySelected(day)" [date]="defaultTimeFrom"></time-picker>
-            —
-            <time-picker *ngIf="isDaySelected(day)" [date]="defaultTimeTo"></time-picker>
+            <div *ngIf="isDaySelected(day)">
+              <time-picker [date]="defaultTimeFrom"></time-picker>
+              —
+              <time-picker [date]="defaultTimeTo"></time-picker>
+            </div>
           </div>
         </div>
       </div>
@@ -82,7 +85,7 @@ export class ActiveTimeComponent {
     this.setupDefaultTime();
   }
 
-  setupDefaultTime() {
+  private setupDefaultTime() {
     this.defaultTimeFrom = new Date();
     this.defaultTimeTo = new Date();
     this.defaultTimeFrom.setHours(12);
@@ -91,56 +94,70 @@ export class ActiveTimeComponent {
     this.defaultTimeTo.setMinutes(0);
   }
 
-  setDefaultTime() {
-    // TODO: implement me -- set default time
+  private setDefaultTime() {
     console.log("TODO set default time for all selected days");
   }
 
-  selectWorkdays() {
-    // TODO: implement me -- should select all work days
-    console.log("TODO select work days");
-  }
-
-  selectAllDays(isSelected: boolean) {
+  private selectWorkdays(isSelected: boolean) {
     if (isSelected) {
-      Weekday.values.map(dayName => {
-        if (!this.activeTime.weekdays.find(d => d.dayName === dayName)) {
-          this.activeTime.weekdays.push({
-            dayName,
-            timeFrom: new Date(),
-            timeTo: new Date()
-          });
-        }
-      });
+      this.selectDays(DaySet.workdays);
+      this.deselectDays(DaySet.weekends);
     }
   }
 
-  isTimeSame() {
+  private selectAllDays(isSelected: boolean) {
+    if (isSelected) {
+      this.selectDays(DaySet.alldays);
+    }
+  }
+
+  private selectDays(daytype: Weekday.DaySet) {
+    Weekday[daytype].map(dayName => {
+      let dayIsNotSelected = !this.activeTime.weekdays.find(d => d.dayName === dayName);
+      if (dayIsNotSelected) {
+        this.selectDay(dayName);
+      }
+    });
+  }
+
+  private deselectDays(daytype: Weekday.DaySet) {
+    Weekday[daytype].map(dayName => {
+      this.deselectDay(dayName);
+    });
+  }
+
+  private isTimeSame() {
     // TODO: implement me -- should check
     // default time if all selected days have the same time
     console.log("TODO if time is same");
   }
 
-  isAllWorkDaysSelected(): boolean {
+  private isAllDaysSelected(): boolean {
+    return this.activeTime.weekdays.length === Weekday.daysCount;
+  }
+
+  private isAllWorkDaysSelected(): boolean {
     let countOfSelectedWorkDays = this.activeTime.weekdays
         .reduce((acc: number, next) => acc + (Weekday.workdays.indexOf(next.dayName) >= 0 ? 1 : 0), 0);
     return (countOfSelectedWorkDays === Weekday.workdaysCount) &&
            (countOfSelectedWorkDays === this.activeTime.weekdays.length);
   }
 
-  isDaySelected(day: Weekday): boolean {
+  private isDaySelected(day: Weekday): boolean {
     return !!this.activeTime.weekdays.find(d => d.dayName === day);
   }
 
-  private selectWeekday(dayName: Weekday, isSelected) {
-
-    let timeFrom = new Date();
-    let timeTo = new Date();
-    if (isSelected) {
-      this.activeTime.weekdays.push({dayName, timeFrom, timeTo});
-    } else {
-      this.activeTime.weekdays = this.activeTime.weekdays.filter(wd => wd.dayName !== dayName);
-    }
+  private pickDay(dayName: Weekday, isSelected) {
+    isSelected ? this.selectDay(dayName) : this.deselectDay(dayName);
   }
 
+  private selectDay(dayName: Weekday) {
+    let timeFrom = Object.assign({}, this.defaultTimeFrom);
+    let timeTo   = Object.assign({}, this.defaultTimeTo);
+    this.activeTime.weekdays.push({dayName, timeFrom, timeTo});
+  }
+
+  private deselectDay(dayName: Weekday) {
+    this.activeTime.weekdays = this.activeTime.weekdays.filter(day => day.dayName !== dayName);
+  }
 }

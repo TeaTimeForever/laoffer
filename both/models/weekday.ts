@@ -25,8 +25,10 @@ export namespace Weekday {
     saturday,
     sunday
   ];
+  export const alldays = values;
 
   export const workdaysCount = 5;
+  export const daysCount = 7;
 
   export const weekends: Weekday[] = [
     saturday,
@@ -40,4 +42,15 @@ export namespace Weekday {
     thursday,
     friday
   ];
+
+  export namespace DaySet {
+    export const alldays  = "alldays";
+    export const workdays = "workdays";
+    export const weekends  = "weekends";
+  }
+
+  export type DaySet =
+    typeof DaySet.alldays  |
+    typeof DaySet.workdays |
+    typeof DaySet.weekends;
 }
