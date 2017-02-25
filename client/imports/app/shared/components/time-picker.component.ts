@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Output } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output } from "@angular/core";
 
 declare var $: JQueryStatic;
 
@@ -10,6 +10,7 @@ export class TimePickerComponent implements AfterViewInit {
   @Output()
   timeSelected = new EventEmitter();
 
+  @Input()
   private date: Date;
 
   getFormattedDate(): string {
@@ -22,7 +23,7 @@ export class TimePickerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    $(this.el.nativeElement).datetimepicker({
+    $(this.el.nativeElement)["datetimepicker"]({
       datepicker: false,
       format: "H:i",
       defaultTime: "12:00 pm",
