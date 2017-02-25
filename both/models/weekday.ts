@@ -26,6 +26,8 @@ export namespace Weekday {
     sunday
   ];
 
+  export const workdaysCount = 5;
+
   export const weekends: Weekday[] = [
     saturday,
     sunday

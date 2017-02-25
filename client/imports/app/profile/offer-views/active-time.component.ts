@@ -124,8 +124,8 @@ export class ActiveTimeComponent {
   isAllWorkDaysSelected(): boolean {
     let countOfSelectedWorkDays = this.activeTime.weekdays
         .reduce((acc: number, next) => acc + (Weekday.workdays.indexOf(next.dayName) >= 0 ? 1 : 0), 0);
-    // TODO: remove magic number
-    return (countOfSelectedWorkDays === 5) && (countOfSelectedWorkDays === this.activeTime.weekdays.length);
+    return (countOfSelectedWorkDays === Weekday.workdaysCount) &&
+           (countOfSelectedWorkDays === this.activeTime.weekdays.length);
   }
 
   isDaySelected(day: Weekday): boolean {
