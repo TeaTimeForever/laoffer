@@ -53,8 +53,8 @@ active time
              type="text" 
              
       />
-      <!--(change)="lala()"
-      [options]="{disableTextInput: false, 'timeFormat': 'h:i A', showDuration: false}"-->
+      <input type="text" id="datetimepicker">
+      <time-picker></time-picker>
       <input id="dateFrom"
              placeholder="time to"
              class="col m3 l3"
@@ -146,7 +146,7 @@ export class ActiveTimeComponent {
   private selectWeekday(day: WeekdayName, isSelected) {
 
     let timeFrom = new Date();
-    let timeTo = new Date;
+    let timeTo = new Date();
     if (isSelected) {
       this.activeTime.weekdays.push({day, timeFrom, timeTo});
     } else {

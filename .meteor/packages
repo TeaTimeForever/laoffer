@@ -27,3 +27,4 @@ ecmascript@0.6.1
 useraccounts:materialize
 angular2-compilers
 digimet:angular2-materialize
+drewy:datetimepicker

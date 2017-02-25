@@ -21,7 +21,7 @@ import { ActiveTimeComponent } from "./profile/offer-views/active-time.component
     AtomPreviewComponent,
     PointDetailsComponent,
     AvailableOffersComponent,
-    ActiveTimeComponent
+    ActiveTimeComponent,
   ],
   entryComponents: [
     AppComponent
