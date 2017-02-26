@@ -88,14 +88,24 @@ export class ActiveTimeComponent {
   private setupDefaultTime() {
     this.defaultTimeFrom = new Date();
     this.defaultTimeTo = new Date();
-    this.defaultTimeFrom.setHours(12);
+    this.defaultTimeFrom.setHours(13);
     this.defaultTimeFrom.setMinutes(0);
     this.defaultTimeTo.setHours(17);
     this.defaultTimeTo.setMinutes(0);
+
   }
 
   private setDefaultTime() {
     console.log("TODO set default time for all selected days");
+  }
+
+  private isTimeSame(): boolean {
+    let differences = this.activeTime.weekdays
+      .reduce((acc, next) => acc.add(next.timeFrom.toTimeString())
+                                .add(next.timeTo.toTimeString()),
+        new Set());
+    console.log("diffs", differences);
+    return differences.size === 2;
   }
 
   private selectWorkdays(isSelected: boolean) {
@@ -126,12 +136,6 @@ export class ActiveTimeComponent {
     });
   }
 
-  private isTimeSame() {
-    // TODO: implement me -- should check
-    // default time if all selected days have the same time
-    console.log("TODO if time is same");
-  }
-
   private isAllDaysSelected(): boolean {
     return this.activeTime.weekdays.length === Weekday.daysCount;
   }
@@ -152,8 +156,8 @@ export class ActiveTimeComponent {
   }
 
   private selectDay(dayName: Weekday) {
-    let timeFrom = Object.assign({}, this.defaultTimeFrom);
-    let timeTo   = Object.assign({}, this.defaultTimeTo);
+    let timeFrom = new Date(this.defaultTimeFrom);
+    let timeTo   = new Date(this.defaultTimeTo);
     this.activeTime.weekdays.push({dayName, timeFrom, timeTo});
   }
 

@@ -4,23 +4,18 @@ declare var $: JQueryStatic;
 
 @Component({
   selector: "time-picker",
-  template: `<input type="text" class="input-time" [value]="getFormattedDate()"  />`
+  template: `<input type="text" class="input-time" [value]="getShortTimeString()" />`
 })
 export class TimePickerComponent implements AfterViewInit {
-  @Output()
-  timeSelected = new EventEmitter();
 
   @Input()
   private date: Date;
 
-  getFormattedDate(): string {
+  getShortTimeString(): string {
     return /..:../.exec(this.date.toTimeString())[0];
   }
 
-  constructor(private el: ElementRef) {
-    this.date = new Date();
-    this.date.setHours(12, 0);
-  }
+  constructor(private el: ElementRef) {}
 
   ngAfterViewInit(): void {
     $(this.el.nativeElement)["datetimepicker"]({
@@ -31,8 +26,8 @@ export class TimePickerComponent implements AfterViewInit {
       maxTime: "17:01",
       step: 15,
       onSelectTime: (currentTime) => {
-        this.date = currentTime;
-        this.timeSelected.next(currentTime);
+        this.date.setHours(currentTime.getHours());
+        this.date.setMinutes(currentTime.getMinutes());
       }
     });
   }
