@@ -7,70 +7,70 @@ import DaySet = Weekday.DaySet;
   selector: "active-time",
   template: `
     active time
-<form materialize>
-  <div class="row">
-    <input id="dateFrom"
-           class="col m2 l2"
-           placeholder="date from"
-           materialize="pickadate"
-           [materializeParams]="[{selectMonths: true, selectYears: 15}]"
-           type="text" />
-    <input id="dateFrom"
-           class="col m2 l2 offset-l1 offset-m1"
-           placeholder="date to"
-           materialize="pickadate"
-           [materializeParams]="[{selectMonths: true, selectYears: 15}]"
-           type="text" />
-  </div>
-  <div class="row">
-    <div class="col m2 l2">
-      <div>
-        <input type="checkbox"
-               [attr.id]="'cb_alldays'"
-               [checked]="isAllDaysSelected()"
-               (change)="selectAllDays($event.target.checked)">
-        <label [attr.for]="'cb_alldays'">All days</label>
+    <form materialize>
+      <div class="row">
+        <input id="dateFrom"
+               class="col m2 l2"
+               placeholder="date from"
+               materialize="pickadate"
+               [materializeParams]="[{selectMonths: true, selectYears: 15}]"
+               type="text" />
+        <input id="dateFrom"
+               class="col m2 l2 offset-l1 offset-m1"
+               placeholder="date to"
+               materialize="pickadate"
+               [materializeParams]="[{selectMonths: true, selectYears: 15}]"
+               type="text" />
       </div>
+      <div class="row">
+        <div class="col m2 l2">
+          <div>
+            <input type="checkbox"
+                   [attr.id]="'cb_alldays'"
+                   [checked]="isAllDaysSelected()"
+                   (change)="selectAllDays($event.target.checked)">
+            <label [attr.for]="'cb_alldays'">All days</label>
+          </div>
 
-      <div>
-        <input type="checkbox"
-               [attr.id]="'cb_workdays'"
-               [checked]="isAllWorkDaysSelected()"
-               (change)="selectWorkdays($event.target.checked)">
-        <label [attr.for]="'cb_workdays'">Work-days</label>
-      </div>
+          <div>
+            <input type="checkbox"
+                   [attr.id]="'cb_workdays'"
+                   [checked]="isAllWorkDaysSelected()"
+                   (change)="selectWorkdays($event.target.checked)">
+            <label [attr.for]="'cb_workdays'">Work-days</label>
+          </div>
 
-      <div>
-        <input type="checkbox"
-               [attr.id]="'cb_time'"
-               [checked]="isTimeSame()"
-               (change)="setDefaultTime($event.target.checked)">
-        <label [attr.for]="'cb_time'">Default time</label>
-      </div>
+          <div>
+            <input type="checkbox"
+                   [attr.id]="'cb_time'"
+                   [checked]="isTimeSame()"
+                   (change)="setDefaultTime($event.target.checked)">
+            <label [attr.for]="'cb_time'">Default time</label>
+          </div>
 
-      <time-picker [date]="defaultTimeFrom"></time-picker>
-      —
-      <time-picker [date]="defaultTimeTo"></time-picker>
-
-    </div>
-    <div class="col m5 l5 offset-m1 offset-l1">
-      <div class="row valign-wrapper" *ngFor="let day of Weekday.alldays">
-        <div class="col m3 l3">
-          <input type="checkbox"
-                 [attr.id]="'cb_' + day"
-                 (change)="pickDay(day, $event.target.checked)"
-                 [checked]="isDaySelected(day)">
-          <label [attr.for]="'cb_' + day">{{day}}</label>
-        </div>
-        <div *ngIf="isDaySelected(day)">
           <time-picker [date]="defaultTimeFrom"></time-picker>
           —
           <time-picker [date]="defaultTimeTo"></time-picker>
+
+        </div>
+        <div class="col m5 l5 offset-m1 offset-l1">
+          <div class="row valign-wrapper" *ngFor="let day of Weekday.alldays">
+            <div class="col m3 l3">
+              <input type="checkbox"
+                     [attr.id]="'cb_' + day"
+                     (change)="pickDay(day, $event.target.checked)"
+                     [checked]="getDay(day)">
+              <label [attr.for]="'cb_' + day">{{day}}</label>
+            </div>
+            <div *ngIf="getDay(day)">
+              <time-picker [date]="getDay(day).timeFrom"></time-picker>
+              —
+              <time-picker [date]="getDay(day).timeTo"></time-picker>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</form>
+    </form>
   `
 })
 export class ActiveTimeComponent {
@@ -147,8 +147,8 @@ export class ActiveTimeComponent {
            (countOfSelectedWorkDays === this.activeTime.weekdays.length);
   }
 
-  private isDaySelected(day: Weekday): boolean {
-    return !!this.activeTime.weekdays.find(d => d.dayName === day);
+  private getDay(day: Weekday): ActiveDay {
+    return this.activeTime.weekdays.find(d => d.dayName === day);
   }
 
   private pickDay(dayName: Weekday, isSelected) {
