@@ -96,7 +96,12 @@ export class ActiveTimeComponent {
   }
 
   private setDefaultTime() {
-    console.log("TODO set default time for all selected days");
+    this.activeTime.weekdays.map(d => {
+      d.timeFrom.setHours(this.defaultTimeFrom.getHours());
+      d.timeFrom.setMinutes(this.defaultTimeFrom.getMinutes());
+      d.timeTo.setHours(this.defaultTimeTo.getHours());
+      d.timeTo.setMinutes(this.defaultTimeTo.getMinutes());
+    });
   }
 
   private isTimeSame(): boolean {
